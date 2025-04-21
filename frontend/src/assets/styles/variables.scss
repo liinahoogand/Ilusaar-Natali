@@ -1,0 +1,11 @@
+$color-primary: #02512B;  // Deep Emerald Green
+$color-secondary: #E6C36A; // Light Gold
+$color-neutral-dark: #333333; // Jet
+$color-neutral-light: #FFFFFE; // White
+
+// Optionally, set global styles
+body {
+  background-color: $color-neutral-light;
+  color: $color-neutral-dark;
+  font-family: 'Georgia', serif;
+}
