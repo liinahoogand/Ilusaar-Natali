@@ -30,10 +30,11 @@
           <h2 class="footer-heading">Asukoht:</h2>
           <p>Kuressaare, Kohtu 1</p>
           <div class="footer-map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d524.8366394402339!2d22.483659932892355!3d58.25255668308892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46f26d1d84cc1ccd%3A0x30d992ddf24384ba!2sKohtu%20tn%201a%2C%20Kuressaare%2C%2093819%20Saare%20maakond!5e0!3m2!1set!2see!4v1744802481670!5m2!1set!2see" 
+            <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d524.8366394402339!2d22.483659932892355!3d58.25255668308892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46f26d1d84cc1ccd%3A0x30d992ddf24384ba!2sKohtu%20tn%201a%2C%20Kuressaare%2C%2093819%20Saare%20maakond!5e0!3m2!1set!2see!4v1744802481670!5m2!1set!2see" 
             width="400" 
             height="300" 
-            style="border:0;" 
+            style="border:0; filter: invert(90%)"
             allowfullscreen="" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade">
@@ -115,6 +116,10 @@
 
 .footer-contact-block p {
   font-size: 14px; /* Väiksem suurus tavatekstile */
+}
+
+.footer-map {
+
 }
   </style>
   
