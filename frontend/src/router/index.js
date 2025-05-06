@@ -26,4 +26,10 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  const defaultTitle = 'Ilusaar';
+  document.title = to.meta.title || defaultTitle;
+  next();
+});
+
 export default router
