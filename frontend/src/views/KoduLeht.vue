@@ -5,9 +5,8 @@
       <div class="container">
 
         <!-- Hero Image -->
-        <div class="esimene-pilt">
-          <img src="../assets/images/kodulehe-pilt-tekstiga.png" alt="Naine rohelise taustaga kodulehe banneril" />
-        </div>
+        <HeroImage />
+
 
         <!-- Welcome Text -->
         <section class="vahetekst">
@@ -56,15 +55,12 @@
           </div>
 
           <div class="broneeri-nupp-container">
-            <router-link to="/broneeri" class="broneeri-nupp">Broneeri</router-link>
+            <router-link to="/broneeri" class="broneeri-nupp">BRONEERI</router-link>
           </div>
         </section>
 
-        <!-- Galerii -->
-        <section class="kollaaž-galerii">
-          <div v-for="(img, index) in images" :key="index" class="kollaaž-item">
-            <img :src="img" alt="Galerii pilt" />
-          </div>
+        <!-- Tagasiside -->
+        <section class="tagasiside">
         </section>
 
       </div>
@@ -76,12 +72,14 @@
 <script>
 import AppFooter from '@/components/AppFooter.vue';
 import NavBar from '@/components/NavBar.vue';
+import HeroImage from '../components/HeroImage.vue';
 
 export default {
   name: 'KoduLeht',
   components: {
     NavBar,
-    AppFooter
+    AppFooter,
+    HeroImage
   },
   data() {
     return {
@@ -135,22 +133,6 @@ body {
   padding: 0;
 }
 
-/* Hero Image */
-.esimene-pilt {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 30px;
-
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
-}
-
 /* Welcome Section */
 .vahetekst {
   text-align: center;
@@ -163,7 +145,7 @@ body {
 
   h2 {
     font-family: 'Tangerine', serif;
-    font-size: 50px;
+    font-size: 55px;
     font-weight: 900;
     color: #E6C36A;
     margin: 20px 0 20px;
@@ -229,7 +211,7 @@ body {
   .teenused-pealkiri {
     text-align: center;
     font-family: 'Tangerine', serif;
-    font-size: 60px;
+    font-size: 55px;
     color: #02512B;
     margin: 10px 0 20px;
   }
@@ -246,7 +228,6 @@ body {
   .teenuste-nimekiri {
     flex: 1;
     text-align: center;
-    font-size: 15px;
     font-family: 'Playfair Display', serif;
     color: white;
     display: flex;
@@ -256,13 +237,13 @@ body {
     h2 {
       font-family: 'Tangerine', serif;
       font-size: 50px;
-      font-weight: bold;
+      font-weight: 900;
       color: #02512B;
       margin: 20px 0 10px;
     }
 
     h3 {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 600;
       color: #02512B;
       margin-bottom: 10px;
@@ -304,12 +285,12 @@ body {
   .broneeri-nupp {
     background-color: white;
     color: #02512b;
-    padding: 10px 25px;
+    padding: 15px 30px;
     border: 1px solid #02512b;
     border-radius: 30px;
-    font-family: 'Tangerine', serif;
-    font-size: 32px;
-    font-weight: bold;
+    font-family: 'Quicksand', serif;
+    font-size: 17px;
+    font-weight: 500;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
 
@@ -320,31 +301,7 @@ body {
   }
 }
 
-/* Gallery Section */
-.kollaaž-galerii {
-  columns: 3 300px;
-  column-gap: 15px;
-  padding: 20px;
-  margin-top: 40px;
+/* Tagasiside Section */
 
-  .kollaaž-item {
-    break-inside: avoid;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      transition: transform 0.3s;
-
-      &:hover {
-        transform: scale(1.02);
-      }
-    }
-  }
-}
 </style>

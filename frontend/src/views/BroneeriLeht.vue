@@ -1,18 +1,29 @@
 <template>
     <NavBar />
-  <div>
-    <h2>Broneeri aeg</h2>
-    <p>Siin saad broneerida aja...</p>
-  </div>
+    <main class="app-container">
+      <BroneeriVorm />
+    </main>
 </template>
 
   <script>
   import NavBar from '@/components/NavBar.vue';
+  import BroneeriVorm from '../components/BroneeriVorm.vue';
   export default {
     name: 'BroneeriLeht',
     components:{
-      NavBar
+      NavBar,
+      BroneeriVorm
     }
   }
   </script>
   
+  <style scoped>
+  .app-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  </style>

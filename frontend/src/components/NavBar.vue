@@ -9,8 +9,9 @@
   
       <!-- Navigation Links -->
       <ul class="nav-links">
-        <li><router-link to="/meist">Meist</router-link></li>
-        <li><router-link to="/broneeri">Broneeri</router-link></li>
+        <li><router-link to="/meist">MEIST
+        </router-link></li>
+        <li><router-link to="/broneeri">BRONEERI</router-link></li>
       </ul>
     </nav>
   </template>
@@ -29,6 +30,8 @@ export default {
     align-items: center; /* Keskendab kõik elemendid vertikaalselt */
     padding: 20px;
     margin-top: 35px; /* Lisab ruumi ülemiselt servalt */
+    font: Quicksand;
+
   }
   
   .logo {
@@ -53,14 +56,16 @@ export default {
   
   .nav-links li {
     display: inline;
+
   }
   
   .nav-links a {
     text-decoration: none;
     color: var(--color-primary);
-    font-weight: 200;
+    font-weight: 500;
     transition: color 0.3s;
-    font-size: 18px;
+    font-size: 15px;
+    font-family: 'Quicksand', serif;
   }
   
   .nav-links a:hover {
