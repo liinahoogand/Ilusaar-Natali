@@ -40,6 +40,8 @@ const now = new Date();
         :locale="'et'"
         :format="'dd.MM.yyyy'"
         class="date-picker"
+        :teleport="true"
+
       />
     </div>
 
@@ -67,6 +69,7 @@ const now = new Date();
   display: flex;
   flex-direction: column;
   gap: 24px;
+  
 }
 
 .step-title {
@@ -92,20 +95,20 @@ const now = new Date();
 
 /* Customize DatePicker */
 :deep(.dp__theme_light) {
-  --dp-background-color: #fff;
-  --dp-text-color: var(--color-neutral-900);
-  --dp-hover-color: var(--color-primary-100);
-  --dp-hover-text-color: var(--color-primary-800);
+  --dp-background-color: #ffff;
+  --dp-text-color: #02512B;
+  --dp-hover-color: #02512B;
+  --dp-hover-text-color: white;
   --dp-hover-icon-color: var(--color-primary-500);
   --dp-primary-color: var(--color-primary-500);
-  --dp-primary-text-color: #fff;
+  --dp-primary-text-color: #02512B;
   --dp-secondary-color: var(--color-primary-100);
   --dp-border-color: var(--color-neutral-300);
   --dp-menu-border-color: var(--color-neutral-300);
   --dp-border-radius: 8px;
   --dp-selected-background-color: var(--color-primary-500);
   --dp-selected-text-color: #fff;
-  --dp-icon-color: var(--color-neutral-500);
+  --dp-icon-color: #02512B;
   --dp-danger-color: var(--color-error-500);
 }
 
@@ -129,9 +132,10 @@ const now = new Date();
 
 :deep(.dp__input) {
   height: 48px;
-  padding: 12px 16px;
+  padding: 12px 40px 12px 30px; /* suurenda parem-paddingut */
   font-size: 16px;
 }
+
 
 .button-group {
   display: flex;

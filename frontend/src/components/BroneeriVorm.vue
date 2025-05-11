@@ -80,6 +80,7 @@ const updateFormField = (field, value) => {
             <TeenuseSamm 
               v-else-if="step === 2" 
               :service="form.service" 
+              :location="form.location"
               @update:service="updateFormField('service', $event)"
               @next="nextStep" 
               @prev="prevStep" 
@@ -126,13 +127,13 @@ const updateFormField = (field, value) => {
 <style scoped>
 .booking-container {
   width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin-top: 50px;
   padding: 16px;
 }
 
 .booking-card {
-  background-color: white;
+  background-color: #96b2a2;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   padding: 32px;
@@ -140,11 +141,13 @@ const updateFormField = (field, value) => {
 }
 
 .booking-title {
-  font-size: 1.75rem;
-  color: var(--color-neutral-900);
-  margin-bottom: 24px;
+  font-size: 60px;
+  font-family: 'Tangerine', serif;
+  color: white;
+  margin-bottom: 50px;
+  margin-top: 20px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 900;
 }
 
 .step-container {
@@ -155,6 +158,9 @@ const updateFormField = (field, value) => {
 
 .step-content {
   margin-top: 24px;
+  font-family: 'Playfair Display', serif;
+  color: white;
+
 }
 
 /* Slide transitions */
@@ -195,15 +201,14 @@ const updateFormField = (field, value) => {
   }
 }
 
-@media (max-width: 480px) {
+@media (prefers-color-scheme: dark) {
   .booking-card {
-    padding: 24px 16px;
-    border-radius: 12px;
+    background-color: #1f3324;
+    border-color: #3ecf8e;
   }
   
   .booking-title {
-    font-size: 1.5rem;
-    margin-bottom: 16px;
+    color: #a8f0c4;
   }
 }
 </style>
