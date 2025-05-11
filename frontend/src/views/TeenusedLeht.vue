@@ -3,27 +3,37 @@
     <div class="teenused-page container">
       <h1>Teenused ja hinnakiri</h1>
   
-      <!-- Ilusaar teenused -->
-      <section>
-        <h2>Ilusaar</h2>
-        <div v-for="service in ilusaarServices" :key="service.id" :id="service.id" class="teenus-blokk">
-          <h3>{{ service.title }}</h3>
-          <p>{{ service.description }}</p>
-          <p><strong>Hind:</strong> {{ service.price }}</p>
-          <p><strong>Kestvus:</strong> {{ service.duration }}</p>
-        </div>
-      </section>
-  
-      <!-- Natali teenused -->
-      <section>
-        <h2>Natali</h2>
-        <div v-for="service in nataliServices" :key="service.id" :id="service.id" class="teenus-blokk">
-          <h3>{{ service.title }}</h3>
-          <p>{{ service.description }}</p>
-          <p><strong>Hind:</strong> {{ service.price }}</p>
-          <p><strong>Kestvus:</strong> {{ service.duration }}</p>
-        </div>
-      </section>
+      <div class="teenused-container">
+  <!-- Ilusaar -->
+  <div class="provider-column">
+    <h2>Ilusaar</h2>
+    <div v-for="(services, category) in servicesByProvider['Ilusaar']" :key="category">
+      <h3>{{ category }}</h3>
+      <div v-for="service in services" :key="service._id" class="teenus-blokk">
+        <h4>{{ service.nimi }}</h4>
+        <p>{{ service.selgitus }}</p>
+        <p><strong>Hind:</strong> {{ service.hind }}</p>
+        <p><strong>Kestvus:</strong> {{ formatDuration(service.aeg) }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Natali -->
+  <div class="provider-column">
+    <h2>Natali</h2>
+    <div v-for="(services, category) in servicesByProvider['Natali']" :key="category">
+      <h3>{{ category }}</h3>
+      <div v-for="service in services" :key="service._id" class="teenus-blokk">
+        <h4>{{ service.nimi }}</h4>
+        <p>{{ service.selgitus }}</p>
+        <p><strong>Hind:</strong> {{ service.hind }}</p>
+        <p><strong>Kestvus:</strong> {{ formatDuration(service.aeg) }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     </div>
     <AppFooter />
   </template>
@@ -31,6 +41,7 @@
   <script>
   import NavBar from '@/components/NavBar.vue';
   import AppFooter from '@/components/AppFooter.vue';
+  
   export default {
     name: "TeenusedView",
     components: {
@@ -38,57 +49,52 @@
       AppFooter
     },
     data() {
-      return {
-        ilusaarServices: [
-          {
-            id: "manikuur",
-            title: "Maniküür/pediküür",
-            description: "Kaunista oma käed ja jalad professionaalse hooldusega...",
-            price: "25 €",
-            duration: "45 min"
-          },
-          {
-            id: "geelkuuned",
-            title: "Geelküüned",
-            description: "Stiilsed ja vastupidavad geelküüned...",
-            price: "35 €",
-            duration: "1h 15min"
-          },
-          // Lisa teised ...
-        ],
-        nataliServices: [
-          {
-            id: "soengud",
-            title: "Soengud",
-            description: "Leia endale uus soeng, mis toob esile sinu parimad jooned...",
-            price: "30 €",
-            duration: "1h"
-          },
-          {
-            id: "loikused",
-            title: "Lõikused",
-            description: "Pakume erinevaid lõikuseid vastavalt sinu soovile...",
-            price: "25 €",
-            duration: "45 min"
-          },
-          // Lisa teised ...
-        ]
-      };
-    },
-    mounted() {
-      // Scrolli ankrule, kui URL-is on hash (#soengud jne)
-      const hash = this.$route.hash;
-      if (hash) {
-        const element = document.querySelector(hash);
-        if (element) {
-          setTimeout(() => {
-            element.scrollIntoView({ behavior: "smooth" });
-          }, 300); // veidi ootamist, et DOM laeks
+  return {
+    servicesByProvider: {}
+  };
+},
+mounted() {
+  fetch("http://localhost:5000/api/teenused")
+    .then(res => res.json())
+    .then(data => {
+      const grouped = {};
+
+      data.forEach(service => {
+        const provider = service.teenusepakkuja;
+        const category = service.kategooria || "Muu";
+
+        if (!grouped[provider]) {
+          grouped[provider] = {};
         }
+
+        if (!grouped[provider][category]) {
+          grouped[provider][category] = [];
+        }
+
+        grouped[provider][category].push(service);
+      });
+
+      this.servicesByProvider = grouped;
+    });
+},
+
+    methods: {
+      formatDuration(minutes) {
+        const mins = parseInt(minutes, 10);
+        if (isNaN(mins)) return "";
+  
+        if (mins < 60) return `${mins} min`;
+  
+        const hours = Math.floor(mins / 60);
+        const remaining = mins % 60;
+  
+        if (remaining === 0) return `${hours}h`;
+        return `${hours}h ${remaining}min`;
       }
     }
   };
   </script>
+  
   
   <style scoped>
   .container {
@@ -96,11 +102,25 @@
     margin: auto;
     padding: 2rem;
   }
-  .teenus-blokk {
-    margin-bottom: 2rem;
-    padding: 1rem;
-    background: #f9f9f9;
-    border-radius: 10px;
-  }
+  .teenused-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.provider-column {
+  flex: 1 1 45%;
+  max-width: 48%;
+}
+
+.teenus-blokk {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 10px;
+}
+
+  
   </style>
   

@@ -1,21 +1,23 @@
 <template>
-    <nav class="navbar">
-      <!-- Logo -->
-      <div class="logo">
-        <router-link to="/">
-          <img src="@/assets/images/logo.png" alt="Logo" />
-        </router-link>
-      </div>
-  
-      <!-- Navigation Links -->
-      <ul class="nav-links">
-        <li><router-link to="/teenused">TEENUSED</router-link></li>
-        <li><router-link to="/meist">MEIST</router-link></li>
-        <li><router-link to="/broneeri">BRONEERI</router-link></li>
-        <li><router-link to="/arvustused">ARVUSTUSED</router-link></li>
-      </ul>
-    </nav>
-  </template>
+  <nav class="navbar">
+    <ul class="nav-side left">
+      <li><router-link to="/arvustused">ARVUSTUSED</router-link></li>
+      <li><router-link to="/meist">MEIST</router-link></li>
+    </ul>
+
+    <div class="logo">
+      <router-link to="/">
+        <img src="@/assets/images/logo.png" alt="Logo" />
+      </router-link>
+    </div>
+
+    <ul class="nav-side right">
+      <li><router-link to="/broneeri">BRONEERI</router-link></li>
+      <li><router-link to="/teenused">TEENUSED</router-link></li>
+    </ul>
+  </nav>
+</template>
+
   
 <script>
 export default {
@@ -25,53 +27,46 @@ export default {
 
 
   <style scoped>
-  .navbar {
-    position: sticky;
-    display: flex;
-    align-items: center; /* Keskendab kõik elemendid vertikaalselt */
-    padding: 20px;
-    margin-top: 35px; /* Lisab ruumi ülemiselt servalt */
-    font: Quicksand;
+ .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  padding-bottom: 0px;
+  font-family: 'Quicksand', sans-serif;
+  position: sticky;
+}
 
-  }
-  
-  .logo {
-    position: absolute;
-    left: 50%; /* Paigutab logo vertikaalselt keskele */
-    transform: translateX(-50%); /* Veidi liigutab logo, et see oleks täpselt keskel */
-  }
-  
-  .logo img {
-    width: 100px; /* Kohanda vastavalt vajadusele */
-  }
-  
-  .nav-links {
-    list-style: none;
-    padding: 100;
-    display: flex;
-    gap: 400px; /* Väiksem kaugus nuppude vahel */
-    position: absolute;
-    left: 50%; /* Paigutab nuppude keskpunkti */
-    transform: translateX(-50%); /* Liigutab nuppude vahetult logost vasakule ja paremale */
-  }
-  
-  .nav-links li {
-    display: inline;
+.nav-side {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-  }
-  
-  .nav-links a {
-    text-decoration: none;
-    color: var(--color-primary);
-    font-weight: 500;
-    transition: color 0.3s;
-    font-size: 15px;
-    font-family: 'Quicksand', serif;
-  }
-  
-  .nav-links a:hover {
-    color: #E6C36A;
-    text-decoration: underline;
-  }
+.logo {
+  flex-shrink: 0;
+}
+
+.logo img {
+  width: 110px;
+}
+
+/* Ühine linkide stiil */
+.nav-side a {
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: 15px;
+  transition: color 0.3s;
+}
+
+.nav-side a:hover {
+  color: #E6C36A;
+  text-decoration: underline;
+}
+
+
   </style>
   

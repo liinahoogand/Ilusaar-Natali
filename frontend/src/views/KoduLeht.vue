@@ -99,14 +99,7 @@ export default {
         { title: 'Hooldused', description: 'Juuksehooldused, mis taastavad sära ja elujõu...' },
         { title: 'Värvimine', description: 'Professionaalne juuksevärvimine vastavalt sinu stiilile...' }
       ],
-      images: [
-        require('@/assets/images/varasem-töö-1.png'),
-        require('@/assets/images/varasem-töö-4.png'),
-        require('@/assets/images/varasem-töö-2.png'),
-        require('@/assets/images/varasem-töö-5.png'),
-        require('@/assets/images/varasem-töö-3.png'),
-        require('@/assets/images/varasem-töö-6.png')
-      ]
+      
     };
   }
 };

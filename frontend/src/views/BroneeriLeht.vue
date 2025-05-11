@@ -9,11 +9,13 @@
   <script>
   import NavBar from '@/components/NavBar.vue';
   import BroneeriVorm from '../components/BroneeriVorm.vue';
+  import AppFooter from '@/components/AppFooter.vue';
   export default {
     name: 'BroneeriLeht',
     components:{
       NavBar,
-      BroneeriVorm
+      BroneeriVorm,
+      AppFooter
     }
   }
   </script>
