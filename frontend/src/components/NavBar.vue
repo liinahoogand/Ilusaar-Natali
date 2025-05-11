@@ -9,9 +9,10 @@
   
       <!-- Navigation Links -->
       <ul class="nav-links">
-        <li><router-link to="/meist">MEIST
-        </router-link></li>
+        <li><router-link to="/teenused">TEENUSED</router-link></li>
+        <li><router-link to="/meist">MEIST</router-link></li>
         <li><router-link to="/broneeri">BRONEERI</router-link></li>
+        <li><router-link to="/arvustused">ARVUSTUSED</router-link></li>
       </ul>
     </nav>
   </template>

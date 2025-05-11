@@ -35,7 +35,7 @@
             width="400" 
             height="300" 
             style="border:0; filter: invert(90%)"
-            allowfullscreen="" 
+            allowfullscreen="true" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade">
             </iframe>
@@ -118,8 +118,5 @@
   font-size: 14px; /* Väiksem suurus tavatekstile */
 }
 
-.footer-map {
-
-}
   </style>
   

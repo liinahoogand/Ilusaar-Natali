@@ -1,29 +1,23 @@
-<script setup lang="ts">
-
-export default {
-  name: 'KuupäevaSamm'
-}
-
+<script setup lang="js">
 import { computed } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
-const props = defineProps<{
-  date: Date | null;
-}>();
+// defineProps stringi-massiiviga
+const props = defineProps(['date']);
 
-const emit = defineEmits<{
-  'update:date': [value: Date];
-  'next': [];
-  'prev': [];
-}>();
+// defineEmits stringi-massiiviga
+const emit = defineEmits(['update:date', 'prev', 'next']);
 
+// kontroll, kas kuupäev on määratud
 const isValid = computed(() => !!props.date);
 
-const updateDate = (newDate: Date) => {
+// kuupäeva muutmine
+const updateDate = (newDate) => {
   emit('update:date', newDate);
 };
 
+// praegune kuupäev – min-date jaoks
 const now = new Date();
 </script>
 
@@ -31,11 +25,11 @@ const now = new Date();
   <div class="step-wrapper">
     <h2 class="step-title">Vali kuupäev</h2>
     <p class="step-description">Millal soovid teenust kasutada?</p>
-    
+
     <div class="form-group">
       <label for="date">Kuupäev:</label>
       <VueDatePicker
-        :model-value="date"
+        :model-value="props.date"
         @update:model-value="updateDate"
         :min-date="now"
         :monday-first="true"
@@ -48,13 +42,13 @@ const now = new Date();
         class="date-picker"
       />
     </div>
-    
+
     <div class="button-group">
       <button class="secondary" @click="emit('prev')">
         <span class="button-icon">←</span>
         Tagasi
       </button>
-      
+
       <button 
         class="primary-button" 
         :disabled="!isValid" 
@@ -66,6 +60,7 @@ const now = new Date();
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .step-wrapper {

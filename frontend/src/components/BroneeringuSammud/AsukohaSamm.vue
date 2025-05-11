@@ -1,34 +1,21 @@
-<script setup lang="ts">
-
-export default {
-  name: 'AsukohaSamm'
-}
-
+<script setup lang="js">
 import { computed } from 'vue';
 
-const props = defineProps<{
-  location: string;
-}>();
-
-const emit = defineEmits<{
-  'update:location': [value: string];
-  'next': [];
-}>();
+// defineProps ja defineEmits kasutamine ilma TypeScripti
+const props = defineProps(['location']);
+const emit = defineEmits(['update:location', 'next']);
 
 const isValid = computed(() => !!props.location);
 
-const updateLocation = (event: Event) => {
-  const target = event.target as HTMLSelectElement;
+const updateLocation = (event) => {
+  const target = event.target;
   emit('update:location', target.value);
 };
 
 const locations = [
   { value: '', label: '-- vali asukoht --', disabled: true },
-  { value: 'Tallinn', label: 'Tallinn' },
-  { value: 'Tartu', label: 'Tartu' },
-  { value: 'Pärnu', label: 'Pärnu' },
-  { value: 'Narva', label: 'Narva' },
-  { value: 'Viljandi', label: 'Viljandi' }
+  { value: 'Salme', label: 'Salme' },
+  { value: 'Kuressaare', label: 'Kuressaare' }
 ];
 </script>
 
@@ -41,7 +28,7 @@ const locations = [
       <label for="location">Asukoht:</label>
       <select 
         id="location" 
-        :value="location" 
+        :value="props.location" 
         @change="updateLocation"
         class="form-control"
       >

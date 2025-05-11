@@ -1,26 +1,16 @@
-<script setup lang="ts">
-
-export default {
-  name: 'NimeSamm'
-}
-
+<script setup lang="js">
 import { computed } from 'vue';
 
-const props = defineProps<{
-  name: string;
-}>();
+// Props ja emitid peavad olema defineeritud stringidena
+const props = defineProps(['name']);
+const emit = defineEmits(['update:name', 'prev', 'next']);
 
-const emit = defineEmits<{
-  'update:name': [value: string];
-  'next': [];
-  'prev': [];
-}>();
+// Kontrolli, kas nimi on vähemalt 3 tähemärki
+const isValid = computed(() => props.name?.length >= 3);
 
-const isValid = computed(() => props.name.length >= 3);
-
-const updateName = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  emit('update:name', target.value);
+// Nime muutmine inputist
+const updateName = (event) => {
+  emit('update:name', event.target.value);
 };
 </script>
 
@@ -34,12 +24,12 @@ const updateName = (event: Event) => {
       <input 
         type="text" 
         id="name" 
-        :value="name" 
+        :value="props.name" 
         @input="updateName"
         placeholder="Ees- ja perekonnanimi" 
         class="form-control"
       />
-      <p v-if="name && !isValid" class="validation-message">
+      <p v-if="props.name && !isValid" class="validation-message">
         Palun sisesta täisnimi (vähemalt 3 tähemärki)
       </p>
     </div>
@@ -61,6 +51,7 @@ const updateName = (event: Event) => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .step-wrapper {

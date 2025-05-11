@@ -1,75 +1,64 @@
-<script setup lang="ts">
+<script setup lang="js">
 
+// defineProps stringide massiivina
+const props = defineProps(['bookingData', 'formattedDate']);
 
-export default {
-  name: 'KinnituseSamm'
-}
-
-import { BookingFormData } from '../../types/booking';
-
-const props = defineProps<{
-  bookingData: BookingFormData;
-  formattedDate: string;
-}>();
-
-const emit = defineEmits<{
-  'submit': [];
-  'prev': [];
-}>();
+// defineEmits stringide massiivina
+const emit = defineEmits(['submit', 'prev']);
 </script>
 
 <template>
   <div class="step-wrapper">
     <h2 class="step-title">Kinnita broneering</h2>
     <p class="step-description">Palun kontrolli broneeringu andmed</p>
-    
+
     <div class="confirmation-box">
       <div class="confirmation-item">
         <span class="confirmation-label">Asukoht:</span>
-        <span class="confirmation-value">{{ bookingData.location }}</span>
+        <span class="confirmation-value">{{ props.bookingData.location }}</span>
       </div>
-      
+
       <div class="confirmation-item">
         <span class="confirmation-label">Teenus:</span>
-        <span class="confirmation-value">{{ bookingData.service }}</span>
+        <span class="confirmation-value">{{ props.bookingData.service }}</span>
       </div>
-      
+
       <div class="confirmation-item">
         <span class="confirmation-label">Kuupäev:</span>
-        <span class="confirmation-value">{{ formattedDate }}</span>
+        <span class="confirmation-value">{{ props.formattedDate }}</span>
       </div>
-      
+
       <div class="confirmation-item">
         <span class="confirmation-label">Kellaaeg:</span>
-        <span class="confirmation-value">{{ bookingData.time }}</span>
+        <span class="confirmation-value">{{ props.bookingData.time }}</span>
       </div>
-      
+
       <div class="confirmation-item">
         <span class="confirmation-label">Nimi:</span>
-        <span class="confirmation-value">{{ bookingData.name }}</span>
+        <span class="confirmation-value">{{ props.bookingData.name }}</span>
       </div>
     </div>
-    
+
     <div class="terms">
-      <p>Broneeringu kinnitamisel nõustud meie <a href="#" class="link">teenuste tingimustega</a>.</p>
+      <p>Broneeringu kinnitamisel nõustud meie 
+        <a href="#" class="link">teenuste tingimustega</a>.
+      </p>
     </div>
-    
+
     <div class="button-group">
       <button class="secondary" @click="emit('prev')">
         <span class="button-icon">←</span>
         Tagasi
       </button>
-      
-      <button 
-        class="submit-button" 
-        @click="emit('submit')"
-      >
+
+      <button class="submit-button" @click="emit('submit')">
         <span class="submit-icon">✓</span>
         Kinnita broneering
       </button>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .step-wrapper {

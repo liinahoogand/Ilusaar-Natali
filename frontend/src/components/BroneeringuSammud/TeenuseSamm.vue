@@ -1,26 +1,14 @@
-<script setup lang="ts">
-
-export default {
-  name: 'TeenuseSamm'
-}
-
+<script setup lang="js">
 import { computed } from 'vue';
 
-const props = defineProps<{
-  service: string;
-}>();
-
-const emit = defineEmits<{
-  'update:service': [value: string];
-  'next': [];
-  'prev': [];
-}>();
+// defineProps ja defineEmits vajavad argumente JavaScriptis
+const props = defineProps(['service']);
+const emit = defineEmits(['update:service', 'prev', 'next']);
 
 const isValid = computed(() => !!props.service);
 
-const updateService = (event: Event) => {
-  const target = event.target as HTMLSelectElement;
-  emit('update:service', target.value);
+const updateService = (event) => {
+  emit('update:service', event.target.value);
 };
 
 const services = [
@@ -37,12 +25,12 @@ const services = [
   <div class="step-wrapper">
     <h2 class="step-title">Vali teenus</h2>
     <p class="step-description">Millist teenust soovid broneerida?</p>
-    
+
     <div class="form-group">
       <label for="service">Teenus:</label>
       <select 
         id="service" 
-        :value="service" 
+        :value="props.service" 
         @change="updateService"
         class="form-control"
       >
@@ -56,13 +44,13 @@ const services = [
         </option>
       </select>
     </div>
-    
+
     <div class="button-group">
       <button class="secondary" @click="emit('prev')">
         <span class="button-icon">←</span>
         Tagasi
       </button>
-      
+
       <button 
         class="primary-button" 
         :disabled="!isValid" 
@@ -74,6 +62,7 @@ const services = [
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .step-wrapper {

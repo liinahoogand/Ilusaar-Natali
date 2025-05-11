@@ -1,13 +1,8 @@
-<script setup lang="ts">
-
-export default {
-  name: 'StepProgress'
-}
-
-defineProps<{
-  currentStep: number;
-  totalSteps: number;
-}>();
+<script setup lang="js">
+defineProps({
+  currentStep: Number,
+  totalSteps: Number
+});
 </script>
 
 <template>

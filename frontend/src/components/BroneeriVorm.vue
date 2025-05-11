@@ -1,21 +1,19 @@
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue';
-import StepProgress from './StepProgress.vue';
+import AjaSamm from './BroneeringuSammud/AjaSamm.vue';
 import AsukohaSamm from './BroneeringuSammud/AsukohaSamm.vue';
 import TeenuseSamm from './BroneeringuSammud/TeenuseSamm.vue';
-import KuupäevaSamm from './BroneeringuSammud/KuupäevaSamm.vue';
-import AjaSamm from './BroneeringuSammud/AjaSamm.vue';
 import NimeSamm from './BroneeringuSammud/NimeSamm.vue';
-import KinnituseSamm from './BroneeringuSammud/KinnituseSamm.vue';
-import { BookingFormData } from '../types/booking';
-import { formatDate } from '../utils/formatter';
-
+import KuupäevaSamm from './BroneeringuSammud/KuupäevaSamm.vue';
+import KinnituseSamm from './BroneeringuSammud/KinnituseSamm.vue'; 
+import StepProgress from './StepProgress.vue';
+import { formatDate } from '../utils/formatter.js';
 
 const step = ref(1);
 const totalSteps = 6;
 const slideDirection = ref('right');
 
-const form = ref<BookingFormData>({
+const form = ref({
   location: '',
   service: '',
   date: null,
@@ -42,13 +40,10 @@ const prevStep = () => {
 };
 
 const submitBooking = () => {
-  // In a real application, you would send this data to your backend
   console.log('Broneeringu andmed:', form.value);
   
-  // Show success message
   alert('Broneering edukalt saadetud!');
   
-  // Reset form
   form.value = {
     location: '',
     service: '',
@@ -57,11 +52,10 @@ const submitBooking = () => {
     name: '',
   };
   
-  // Return to step 1
   step.value = 1;
 };
 
-const updateFormField = (field: keyof BookingFormData, value: any) => {
+const updateFormField = (field, value) => {
   form.value[field] = value;
 };
 </script>

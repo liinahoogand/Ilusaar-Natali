@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Kodu from "@/views/KoduLeht.vue";
 import Meist from "@/views/MeistInfo.vue";
 import Broneeri from "@/views/BroneeriLeht.vue";
+import Arvustused from "@/views/ArvustusteLeht.vue";
+import Teenused from "@/views/TeenusedLeht.vue";
 
 const routes = [
   {
@@ -18,6 +20,16 @@ const routes = [
     path: '/broneeri',
     name: 'Broneeri',
     component: Broneeri
+  },
+  {
+    path: '/arvustused',
+    name: 'Arvustused',
+    component: Arvustused
+  },
+  {
+    path: '/teenused',
+    name: 'Teenused',
+    component: Teenused
   }
 ]
 

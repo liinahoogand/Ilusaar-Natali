@@ -1,39 +1,27 @@
-<script setup lang="ts">
-
-export default {
-  name: 'AjaSamm'
-}
-
+<script setup>
 import { computed } from 'vue';
+const props = defineProps(['time']);
+const emit = defineEmits(['update:time', 'prev', 'next']);
 
-const props = defineProps<{
-  time: string;
-}>();
-
-const emit = defineEmits<{
-  'update:time': [value: string];
-  'next': [];
-  'prev': [];
-}>();
 
 const isValid = computed(() => !!props.time);
 
-const updateTime = (event: Event) => {
-  const target = event.target as HTMLSelectElement;
+const updateTime = (event) => {
+  const target = event.target;
   emit('update:time', target.value);
 };
 
 const timeOptions = computed(() => {
   const times = [];
-  const start = 9 * 60; // 9:00 in minutes
-  const end = 18 * 60;  // 18:00 in minutes
-  
+  const start = 9 * 60;
+  const end = 18 * 60;
+
   for (let i = start; i <= end; i += 15) {
-    const h = Math.floor(i / 60).toString().padStart(2, '0');
-    const m = (i % 60).toString().padStart(2, '0');
+    const h = String(Math.floor(i / 60)).padStart(2, '0');
+    const m = String(i % 60).padStart(2, '0');
     times.push(`${h}:${m}`);
   }
-  
+
   return times;
 });
 </script>

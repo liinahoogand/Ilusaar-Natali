@@ -61,6 +61,7 @@
 
         <!-- Tagasiside -->
         <section class="tagasiside">
+          <ArvustuseKarusell />
         </section>
 
       </div>
@@ -73,13 +74,15 @@
 import AppFooter from '@/components/AppFooter.vue';
 import NavBar from '@/components/NavBar.vue';
 import HeroImage from '../components/HeroImage.vue';
+import ArvustuseKarusell from '@/components/ArvustuseKarusell.vue';
 
 export default {
   name: 'KoduLeht',
   components: {
     NavBar,
     AppFooter,
-    HeroImage
+    HeroImage,
+    ArvustuseKarusell
   },
   data() {
     return {
