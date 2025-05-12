@@ -2,14 +2,14 @@
 import { computed } from 'vue';
 
 // defineProps ja defineEmits kasutamine ilma TypeScripti
-const props = defineProps(['location']);
-const emit = defineEmits(['update:location', 'next']);
+const props = defineProps(['asukoht']);
+const emit = defineEmits(['update:asukoht', 'next']);
 
-const isValid = computed(() => !!props.location);
+const isValid = computed(() => !!props.asukoht);
 
 const updateLocation = (event) => {
   const target = event.target;
-  emit('update:location', target.value);
+  emit('update:asukoht', target.value);
 };
 
 const locations = [
@@ -25,10 +25,10 @@ const locations = [
     <p class="step-description">Palun vali, millises linnas soovid teenust kasutada</p>
     
     <div class="form-group">
-      <label for="location">Asukoht:</label>
+      <label for="asukoht">Asukoht:</label>
       <select 
-        id="location" 
-        :value="props.location" 
+        id="asukoht" 
+        :value="props.asukoht" 
         @change="updateLocation"
         class="form-control"
       >

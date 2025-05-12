@@ -1,15 +1,23 @@
 <script setup>
-import { computed } from 'vue';
-const props = defineProps(['time']);
-const emit = defineEmits(['update:time', 'prev', 'next']);
+import { ref, watch, computed } from 'vue';
 
+const props = defineProps(['kell']);
+const emit = defineEmits(['update:kell', 'prev', 'next']);
 
-const isValid = computed(() => !!props.time);
+// lokaalne ref, mis algab prop väärtusest
+const selectedTime = ref(props.kell || '');
 
-const updateTime = (event) => {
-  const target = event.target;
-  emit('update:time', target.value);
-};
+// kui kasutaja muudab aega, emiteeri uuendus
+watch(selectedTime, (newVal) => {
+  emit('update:kell', newVal);
+});
+
+// kui väline `props.kell` muutub (nt sammude vahetamine), uuenda ka lokaalset
+watch(() => props.kell, (newVal) => {
+  selectedTime.value = newVal;
+});
+
+const isValid = computed(() => !!selectedTime.value);
 
 const timeOptions = computed(() => {
   const times = [];
@@ -24,6 +32,8 @@ const timeOptions = computed(() => {
 
   return times;
 });
+
+
 </script>
 
 <template>
@@ -32,20 +42,19 @@ const timeOptions = computed(() => {
     <p class="step-description">Mis kellaajal soovid oma broneeringut?</p>
     
     <div class="form-group">
-      <label for="time">Kellaaeg:</label>
+      <label for="kell">Kellaaeg:</label>
       <select 
-        id="time" 
-        :value="time" 
-        @change="updateTime"
+        id="kell" 
+        v-model="selectedTime" 
         class="form-control"
       >
         <option value="" disabled>-- vali kellaaeg --</option>
         <option 
-          v-for="time in timeOptions" 
-          :key="time" 
-          :value="time"
+          v-for="kell in timeOptions" 
+          :key="kell" 
+          :value="kell"
         >
-          {{ time }}
+          {{ kell }}
         </option>
       </select>
     </div>
@@ -67,6 +76,7 @@ const timeOptions = computed(() => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .step-wrapper {

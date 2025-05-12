@@ -7,6 +7,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./utils/db.js";
 import servicesRoute from "./routes/services.js";
+import bookingRoutes from './routes/booking.js'; // lisa see
+
 
 dotenv.config();
 const app = express();
@@ -52,6 +54,8 @@ app.get("/image/:id", async (req, res) => {
 });
 
 app.use("/api/teenused", servicesRoute);
+app.use("/api/broneeringud", bookingRoutes); // lisa see, et API töötaks
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server töötab pordil ${PORT}`));

@@ -5,28 +5,34 @@
       <h1>Klientide arvustused</h1>
 
       <!-- Arvustuse lisamise vorm -->
-      <div class="form-section">
-        <h2>Lisa oma arvustus</h2>
-        <form @submit.prevent="submitReview">
-          <input
-            type="text"
-            v-model="newReview.author"
-            placeholder="Sinu nimi"
-            required
-          />
-          <textarea
-            v-model="newReview.comment"
-            placeholder="Sinu tagasiside"
-            required
-          ></textarea>
-          <label>Hinne:</label>
-          <select v-model.number="newReview.rating" required>
-            <option disabled value="">Vali hinne</option>
-            <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
-          </select>
-          <button type="submit">Saada arvustus</button>
-        </form>
-      </div>
+<!-- Vormi avamise nupp -->
+<button @click="showForm = !showForm">
+  {{ showForm ? 'Peida arvustuse vorm' : 'Lisa oma arvustus' }}
+</button>
+
+<!-- Arvustuse lisamise vorm -->
+<div v-if="showForm" class="form-section">
+  <h2>Lisa oma arvustus</h2>
+  <form @submit.prevent="submitReview">
+    <input
+      type="text"
+      v-model="newReview.author"
+      placeholder="Sinu nimi"
+      required
+    />
+    <textarea
+      v-model="newReview.comment"
+      placeholder="Sinu tagasiside"
+      required
+    ></textarea>
+    <label>Hinne:</label>
+    <select v-model.number="newReview.rating" required>
+      <option disabled value="">Vali hinne</option>
+      <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+    </select>
+    <button type="submit">Saada arvustus</button>
+  </form>
+</div>
 
       <!-- Arvustuste nimekiri -->
       <div class="arvustuste-list">
@@ -63,6 +69,7 @@
     },
     data() {
       return {
+        showForm: false,
         reviews: [
           {
             rating: 5,

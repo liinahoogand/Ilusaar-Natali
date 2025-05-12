@@ -4,6 +4,7 @@ import Meist from "@/views/MeistInfo.vue";
 import Broneeri from "@/views/BroneeriLeht.vue";
 import Arvustused from "@/views/ArvustusteLeht.vue";
 import Teenused from "@/views/TeenusedLeht.vue";
+import Admin from "@/views/AdminLeht.vue";
 
 const routes = [
   {
@@ -30,6 +31,10 @@ const routes = [
     path: '/teenused',
     name: 'Teenused',
     component: Teenused
+  },
+  { path: '/admin',
+    name: 'Admin',
+    component: Admin
   }
 ]
 

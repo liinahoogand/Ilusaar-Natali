@@ -4,17 +4,17 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
 // defineProps stringi-massiiviga
-const props = defineProps(['date']);
+const props = defineProps(['kuupäev']);
 
 // defineEmits stringi-massiiviga
-const emit = defineEmits(['update:date', 'prev', 'next']);
+const emit = defineEmits(['update:kuupäev', 'prev', 'next']);
 
 // kontroll, kas kuupäev on määratud
-const isValid = computed(() => !!props.date);
+const isValid = computed(() => !!props.kuupäev);
 
 // kuupäeva muutmine
 const updateDate = (newDate) => {
-  emit('update:date', newDate);
+  emit('update:kuupäev', newDate);
 };
 
 // praegune kuupäev – min-date jaoks
@@ -27,9 +27,9 @@ const now = new Date();
     <p class="step-description">Millal soovid teenust kasutada?</p>
 
     <div class="form-group">
-      <label for="date">Kuupäev:</label>
+      <label for="kuupäev">Kuupäev:</label>
       <VueDatePicker
-        :model-value="props.date"
+        :model-value="props.kuupäev"
         @update:model-value="updateDate"
         :min-date="now"
         :monday-first="true"

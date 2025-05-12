@@ -13,16 +13,27 @@ const step = ref(1);
 const totalSteps = 6;
 const slideDirection = ref('right');
 
+function calculateEndTime(startTime, durationMinutes) {
+  const [hours, minutes] = startTime.split(':').map(Number);
+  const start = new Date(0, 0, 0, hours, minutes);
+  const end = new Date(start.getTime() + durationMinutes * 60000);
+  return `${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}`;
+}
+
+
 const form = ref({
-  location: '',
-  service: '',
-  date: null,
-  time: '',
-  name: '',
+  asukoht: '',
+  teenus: '',
+  kuupäev: null,
+  kell: '',
+  nimi: '',
+  teenusepakkuja: '',
+  aeg: null,
+  lõpp: null,
 });
 
 const formattedDate = computed(() => {
-  return form.value.date ? formatDate(form.value.date) : '';
+  return form.value.kuupäev ? formatDate(form.value.kuupäev) : '';
 });
 
 const nextStep = () => {
@@ -39,25 +50,36 @@ const prevStep = () => {
   }
 };
 
-const submitBooking = () => {
-  console.log('Broneeringu andmed:', form.value);
-  
-  alert('Broneering edukalt saadetud!');
-  
-  form.value = {
-    location: '',
-    service: '',
-    date: null,
-    time: '',
-    name: '',
-  };
-  
-  step.value = 1;
+const submitBooking = async () => {
+  try {
+    // arvuta lõppaeg ja lisa form andmetele
+    form.value.lõpp = calculateEndTime(form.value.kell, form.value.aeg);
+
+    await fetch('http://localhost:5000/api/broneeringud', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form.value)
+    });
+
+    alert('Broneering edukalt salvestatud!');
+    form.value = { asukoht: '', teenus: '', kuupäev: null, kell: '', nimi: '', teenusepakkuja: '', aeg: null, lõpp: null };
+    step.value = 1;
+    console.log('Broneering saadetakse:', form.value);
+
+  } catch (error) {
+    console.error('Salvestamine ebaõnnestus:', error);
+    alert('Midagi läks valesti!');
+  }
 };
 
+
 const updateFormField = (field, value) => {
+  console.log('Väli uuendatud:', field, value);
   form.value[field] = value;
 };
+
 </script>
 
 <template>
@@ -72,40 +94,44 @@ const updateFormField = (field, value) => {
           <div class="step-content" :key="step">
             <AsukohaSamm 
               v-if="step === 1" 
-              :location="form.location" 
-              @update:location="updateFormField('location', $event)"
+              :asukoht="form.asukoht" 
+              @update:asukoht="updateFormField('asukoht', $event)"
               @next="nextStep" 
             />
             
             <TeenuseSamm 
               v-else-if="step === 2" 
-              :service="form.service" 
-              :location="form.location"
-              @update:service="updateFormField('service', $event)"
+              :teenus="form.teenus" 
+              :asukoht="form.asukoht"
+              :teenusepakkuja="form.teenusepakkuja"
+              :aeg="form.aeg"
+              @update:teenus="updateFormField('teenus', $event)"
+              @update:teenusepakkuja="updateFormField('teenusepakkuja', $event)"
+              @update:aeg="updateFormField('aeg', $event)"
               @next="nextStep" 
               @prev="prevStep" 
             />
             
             <KuupäevaSamm 
               v-else-if="step === 3" 
-              :date="form.date" 
-              @update:date="updateFormField('date', $event)"
+              :kuupäev="form.kuupäev" 
+              @update:kuupäev="updateFormField('kuupäev', $event)"
               @next="nextStep" 
               @prev="prevStep" 
             />
             
             <AjaSamm 
               v-else-if="step === 4" 
-              :time="form.time" 
-              @update:time="updateFormField('time', $event)"
+              :kell="form.kell" 
+              @update:kell="updateFormField('kell', $event)"
               @next="nextStep" 
               @prev="prevStep" 
             />
             
             <NimeSamm 
               v-else-if="step === 5" 
-              :name="form.name" 
-              @update:name="updateFormField('name', $event)"
+              :nimi="form.nimi" 
+              @update:nimi="updateFormField('nimi', $event)"
               @next="nextStep" 
               @prev="prevStep" 
             />

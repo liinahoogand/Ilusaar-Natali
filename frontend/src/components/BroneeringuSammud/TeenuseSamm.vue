@@ -2,22 +2,28 @@
 import { ref, computed, onMounted, watch } from 'vue';
 
 // Props ja emits
-const props = defineProps(['location', 'service']);
-const emit = defineEmits(['update:service', 'prev', 'next']);
+const props = defineProps(['asukoht', 'teenus']);
+const emit = defineEmits(['update:teenus', 'prev', 'next']);
 
-const isValid = computed(() => !!props.service);
+
+const isValid = computed(() => !!props.teenus);
 
 // Teenuste seisund
 const allServices = ref([]);
 const filteredServices = computed(() => {
-  if (!props.location) return [];
+  if (!props.asukoht) return [];
 
-  return allServices.value.filter(service => service[props.location] === "true");
+  return allServices.value.filter(teenus => teenus[props.asukoht] === "true");
 });
 
-// Teenuse uuendamine
 const updateService = (event) => {
-  emit('update:service', event.target.value);
+  const selectedService = allServices.value.find(s => s.nimi === event.target.value);
+  if (selectedService) {
+    emit('update:teenus', selectedService.nimi);
+    emit('update:teenusepakkuja', selectedService.teenusepakkuja); 
+    emit('update:aeg', selectedService.aeg); 
+
+  }
 };
 
 // API-st andmete laadimine
@@ -34,9 +40,9 @@ const fetchServices = async () => {
 onMounted(fetchServices);
 
 // Kui location muutub, võime hiljem siia lisada loogikat (praegu piisab computed'ist)
-watch(() => props.location, () => {
+watch(() => props.asukoht, () => {
   // valikuline: puhasta valitud teenus uue asukoha korral
-  emit('update:service', '');
+  emit('update:teenus', '');
 });
 </script>
 
@@ -46,10 +52,10 @@ watch(() => props.location, () => {
     <p class="step-description">Millist teenust soovid broneerida?</p>
 
     <div class="form-group">
-      <label for="service">Teenus:</label>
+      <label for="teenus">Teenus:</label>
       <select 
-        id="service" 
-        :value="props.service" 
+        id="teenus" 
+        :value="props.teenus" 
         @change="updateService"
         class="form-control"
       >

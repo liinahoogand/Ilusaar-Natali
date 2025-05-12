@@ -2,15 +2,15 @@
 import { computed } from 'vue';
 
 // Props ja emitid peavad olema defineeritud stringidena
-const props = defineProps(['name']);
-const emit = defineEmits(['update:name', 'prev', 'next']);
+const props = defineProps(['nimi']);
+const emit = defineEmits(['update:nimi', 'prev', 'next']);
 
 // Kontrolli, kas nimi on vähemalt 3 tähemärki
-const isValid = computed(() => props.name?.length >= 3);
+const isValid = computed(() => props.nimi?.length >= 3);
 
 // Nime muutmine inputist
 const updateName = (event) => {
-  emit('update:name', event.target.value);
+  emit('update:nimi', event.target.value);
 };
 </script>
 
@@ -20,16 +20,16 @@ const updateName = (event) => {
     <p class="step-description">Palun sisesta oma nimi broneeringu jaoks</p>
     
     <div class="form-group">
-      <label for="name">Nimi:</label>
+      <label for="nimi">Nimi:</label>
       <input 
         type="text" 
-        id="name" 
-        :value="props.name" 
+        id="nimi" 
+        :value="props.nimi" 
         @input="updateName"
         placeholder="Ees- ja perekonnanimi" 
         class="form-control"
       />
-      <p v-if="props.name && !isValid" class="validation-message">
+      <p v-if="props.nimi && !isValid" class="validation-message">
         Palun sisesta täisnimi (vähemalt 3 tähemärki)
       </p>
     </div>

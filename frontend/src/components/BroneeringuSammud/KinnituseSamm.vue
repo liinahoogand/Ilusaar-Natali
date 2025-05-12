@@ -1,10 +1,16 @@
 <script setup lang="js">
 
-// defineProps stringide massiivina
 const props = defineProps(['bookingData', 'formattedDate']);
 
 // defineEmits stringide massiivina
 const emit = defineEmits(['submit', 'prev']);
+
+function calculateEndTime(startTime, durationMinutes) {
+  const [hours, minutes] = startTime.split(':').map(Number);
+  const start = new Date(0, 0, 0, hours, minutes);
+  const end = new Date(start.getTime() + durationMinutes * 60000);
+  return `${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}`;
+}
 </script>
 
 <template>
@@ -15,12 +21,12 @@ const emit = defineEmits(['submit', 'prev']);
     <div class="confirmation-box">
       <div class="confirmation-item">
         <span class="confirmation-label">Asukoht:</span>
-        <span class="confirmation-value">{{ props.bookingData.location }}</span>
+        <span class="confirmation-value">{{ props.bookingData.asukoht }}</span>
       </div>
 
       <div class="confirmation-item">
         <span class="confirmation-label">Teenus:</span>
-        <span class="confirmation-value">{{ props.bookingData.service }}</span>
+        <span class="confirmation-value">{{ props.bookingData.teenus }}</span>
       </div>
 
       <div class="confirmation-item">
@@ -30,12 +36,16 @@ const emit = defineEmits(['submit', 'prev']);
 
       <div class="confirmation-item">
         <span class="confirmation-label">Kellaaeg:</span>
-        <span class="confirmation-value">{{ props.bookingData.time }}</span>
+        <span class="confirmation-value">
+          {{ props.bookingData.kell }} – 
+          {{ calculateEndTime(props.bookingData.kell, props.bookingData.aeg) }}
+        </span>
       </div>
+
 
       <div class="confirmation-item">
         <span class="confirmation-label">Nimi:</span>
-        <span class="confirmation-value">{{ props.bookingData.name }}</span>
+        <span class="confirmation-value">{{ props.bookingData.nimi }}</span>
       </div>
     </div>
 
