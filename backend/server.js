@@ -25,7 +25,7 @@ app.use(cors());
 app.use(express.json());
 
 const storage = new GridFsStorage({
-  url: process.env.VITE_API_URL,
+  url: process.env.MONGO_URI,
   file: (req, file) => {
     return {
       filename: file.originalname,
