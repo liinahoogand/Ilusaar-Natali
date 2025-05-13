@@ -19,7 +19,7 @@ const teenused = ref([]);  // Teenuste loetelu
 // API teenuste laadimine
 const fetchServices = async () => {
   try {
-    const res = await fetch('http://localhost:5000/api/teenused');
+    const res = await fetch('https://ilusaar-backend.onrender.com/api/teenused');
     const data = await res.json();
     // Kui teenus on objekt (näiteks { name: 'Juukselõikus', id: 1 })
     teenused.value = data.map(service => service.nimi); // Siin kasuta vastavat välju teenuse objekti järgi
@@ -33,7 +33,7 @@ const fetchServices = async () => {
 // Modalist saadud broneering salvestamine
 const handleModalSubmit = async (data) => {
   try {
-    await fetch('http://localhost:5000/api/broneeringud', {
+    await fetch('https://ilusaar-backend.onrender.com/api/broneeringud', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -97,7 +97,7 @@ const getColorForProvider = (provider) => {
 // API andmete laadimine
 const fetchBookings = async () => {
   try {
-    const res = await fetch('http://localhost:5000/api/broneeringud');
+    const res = await fetch('https://ilusaar-backend.onrender.com/api/broneeringud');
     const data = await res.json();
 
     const events = data

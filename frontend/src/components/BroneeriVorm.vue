@@ -57,7 +57,7 @@ const submitBooking = async () => {
     // arvuta lõppaeg ja lisa form andmetele
     form.value.lõpp = calculateEndTime(form.value.kell, form.value.aeg);
 
-    await fetch('http://localhost:5000/api/broneeringud', {
+    await fetch('https://ilusaar-backend.onrender.com/api/broneeringud', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

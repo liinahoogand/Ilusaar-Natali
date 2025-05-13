@@ -81,7 +81,7 @@ watch(() => props.booking, (b) => {
 // PUT päring broneeringu muutmiseks
 const updateBooking = async () => {
   try {
-    const res = await fetch(`http://localhost:5000/api/broneeringud/${props.booking._id}`, {
+    const res = await fetch(`https://ilusaar-backend.onrender.com/api/broneeringud/${props.booking._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
@@ -102,7 +102,7 @@ const deleteBooking = async () => {
   if (!confirmed) return;
 
   try {
-    const res = await fetch(`http://localhost:5000/api/broneeringud/${props.booking._id}`, {
+    const res = await fetch(`https://ilusaar-backend.onrender.com/api/broneeringud/${props.booking._id}`, {
       method: 'DELETE'
     });
     const data = await res.json();

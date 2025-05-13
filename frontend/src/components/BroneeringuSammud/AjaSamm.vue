@@ -22,7 +22,7 @@ watch(
   async ([kuupäev, teenusepakkuja]) => {
     if (kuupäev && teenusepakkuja) {
       try {
-        const res = await fetch(`http://localhost:5000/api/broneeringud?kuupäev=${kuupäev}&teenusepakkuja=${encodeURIComponent(teenusepakkuja)}`);
+        const res = await fetch(`https://ilusaar-backend.onrender.com/api/broneeringud?kuupäev=${kuupäev}&teenusepakkuja=${encodeURIComponent(teenusepakkuja)}`);
         existingBookings.value = await res.json();
       } catch (err) {
         console.error('Viga broneeringute laadimisel:', err);

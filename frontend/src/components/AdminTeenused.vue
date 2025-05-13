@@ -9,7 +9,7 @@ const error = ref(null);
 const fetchTeenused = async () => {
   loading.value = true;
   try {
-    const res = await fetch('http://localhost:5000/api/teenused');
+    const res = await fetch('https://ilusaar-backend.onrender.com/api/teenused');
     teenused.value = await res.json();
   } catch (err) {
     error.value = 'Teenuste laadimine ebaõnnestus';
@@ -24,7 +24,7 @@ const salvestaMuutused = async (teenus) => {
   try {
     console.log("Saadan salvestamiseks:", teenus);
 
-      const res = await fetch(`http://localhost:5000/api/teenused/${teenus._id}`, {
+      const res = await fetch(`https://ilusaar-backend.onrender.com/api/teenused/${teenus._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(teenus)
@@ -41,7 +41,7 @@ const salvestaMuutused = async (teenus) => {
 const kustutaTeenus = async (id) => {
   if (!confirm('Oled kindel, et soovid kustutada selle teenuse?')) return;
   try {
-    const res = await fetch(`http://localhost:5000/api/teenused/${id}`, {
+    const res = await fetch(`https://ilusaar-backend.onrender.com/api/teenused/${id}`, {
       method: 'DELETE'
     });
     if (!res.ok) throw new Error('Kustutamine ebaõnnestus');
@@ -64,7 +64,7 @@ const uusTeenus = ref({
 
 const lisaUusTeenus = async () => {
   try {
-    const res = await fetch('http://localhost:5000/api/teenused', {
+    const res = await fetch('https://ilusaar-backend.onrender.com/api/teenused', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(uusTeenus.value)

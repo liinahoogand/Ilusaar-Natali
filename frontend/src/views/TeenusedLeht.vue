@@ -57,7 +57,7 @@ export default {
     };
   },
   mounted() {
-    fetch("http://localhost:5000/api/teenused")
+    fetch("https://ilusaar-backend.onrender.com/api/teenused")
       .then(res => res.json())
       .then(data => {
         const grouped = {};

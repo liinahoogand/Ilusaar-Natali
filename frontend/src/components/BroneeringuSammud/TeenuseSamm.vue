@@ -29,7 +29,7 @@ const updateService = (event) => {
 // API-st andmete laadimine
 const fetchServices = async () => {
   try {
-    const res = await fetch('http://localhost:5000/api/teenused');
+    const res = await fetch('https://ilusaar-backend.onrender.com/api/teenused');
     const data = await res.json();
     allServices.value = data;
   } catch (error) {
