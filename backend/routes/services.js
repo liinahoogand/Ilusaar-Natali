@@ -24,4 +24,15 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updated = await Service.findByIdAndUpdate(id, req.body, { new: true });
+    res.json(updated);
+  } catch (err) {
+    console.error('Viga teenuse uuendamisel:', err);
+    res.status(500).json({ error: 'Teenuse uuendamine ebaõnnestus' });
+  }
+});
+
 export default router;

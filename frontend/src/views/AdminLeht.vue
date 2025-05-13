@@ -1,10 +1,12 @@
 <script>
 import dayGridPlugin from '@fullcalendar/daygrid'
 import KalendriVaade from '@/components/KalendriVaade.vue'  
+import AdminTeenused from '@/components/AdminTeenused.vue'
 
 export default {
   components: {
-    KalendriVaade // make the <FullCalendar> tag available
+    KalendriVaade,
+    AdminTeenused // make the <FullCalendar> tag available
   },
   data: function() {
     return {
@@ -24,4 +26,6 @@ export default {
 <template>
   <h1>KalendriVaade</h1>
     <KalendriVaade />
+  <h1>Teenused</h1>
+    <AdminTeenused />
 </template>

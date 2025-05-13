@@ -122,11 +122,15 @@ const updateFormField = (field, value) => {
             
             <AjaSamm 
               v-else-if="step === 4" 
-              :kell="form.kell" 
+              :kell="form.kell"
+              :kuupäev="form.kuupäev"
+              :teenusepakkuja="form.teenusepakkuja"
+              :aeg="form.aeg"
               @update:kell="updateFormField('kell', $event)"
               @next="nextStep" 
               @prev="prevStep" 
             />
+
             
             <NimeSamm 
               v-else-if="step === 5" 

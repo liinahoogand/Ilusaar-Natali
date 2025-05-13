@@ -1,23 +1,61 @@
 <script setup>
 import { ref, watch, computed } from 'vue';
 
-const props = defineProps(['kell']);
+const props = defineProps(['kell', 'kuupäev', 'teenusepakkuja', 'aeg']);
 const emit = defineEmits(['update:kell', 'prev', 'next']);
 
-// lokaalne ref, mis algab prop väärtusest
 const selectedTime = ref(props.kell || '');
+const existingBookings = ref([]);
 
-// kui kasutaja muudab aega, emiteeri uuendus
 watch(selectedTime, (newVal) => {
   emit('update:kell', newVal);
 });
 
-// kui väline `props.kell` muutub (nt sammude vahetamine), uuenda ka lokaalset
+// uuenda valitud väärtust kui props muutub
 watch(() => props.kell, (newVal) => {
   selectedTime.value = newVal;
 });
 
-const isValid = computed(() => !!selectedTime.value);
+// lae olemasolevad broneeringud, kui kuupäev või teenusepakkuja muutub
+watch(
+  () => [props.kuupäev, props.teenusepakkuja],
+  async ([kuupäev, teenusepakkuja]) => {
+    if (kuupäev && teenusepakkuja) {
+      try {
+        const res = await fetch(`http://localhost:5000/api/broneeringud?kuupäev=${kuupäev}&teenusepakkuja=${encodeURIComponent(teenusepakkuja)}`);
+        existingBookings.value = await res.json();
+      } catch (err) {
+        console.error('Viga broneeringute laadimisel:', err);
+        existingBookings.value = [];
+      }
+    }
+  },
+  { immediate: true }
+);
+
+// Kontroll, kas aeg on vaba
+function isTimeAvailable(time) {
+  const [h, m] = time.split(':').map(Number);
+  const startTime = new Date(0, 0, 0, h, m);
+  const endTime = new Date(startTime.getTime() + (props.aeg || 0) * 60000);
+
+  return !existingBookings.value.some(b => {
+    // ainult sama teenusepakkuja broneeringud loevad
+    if (b.teenusepakkuja !== props.teenusepakkuja) return false;
+
+    if (!b.kell || !b.lõpp) return false;
+
+    const bStartParts = b.kell.split(':');
+    const bEndParts = b.lõpp.split(':');
+    if (bStartParts.length < 2 || bEndParts.length < 2) return false;
+
+    const bStart = new Date(0, 0, 0, Number(bStartParts[0]), Number(bStartParts[1]));
+    const bEnd = new Date(0, 0, 0, Number(bEndParts[0]), Number(bEndParts[1]));
+
+    return startTime < bEnd && endTime > bStart;
+  });
+}
+
 
 const timeOptions = computed(() => {
   const times = [];
@@ -27,14 +65,18 @@ const timeOptions = computed(() => {
   for (let i = start; i <= end; i += 15) {
     const h = String(Math.floor(i / 60)).padStart(2, '0');
     const m = String(i % 60).padStart(2, '0');
-    times.push(`${h}:${m}`);
+    const t = `${h}:${m}`;
+    if (isTimeAvailable(t)) {
+      times.push(t);
+    }
   }
 
   return times;
 });
 
-
+const isValid = computed(() => !!selectedTime.value);
 </script>
+
 
 <template>
   <div class="step-wrapper">

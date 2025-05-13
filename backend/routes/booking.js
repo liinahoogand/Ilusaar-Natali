@@ -1,29 +1,42 @@
 import express from 'express';
 import Booking from '../models/Booking.js';
+import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
-// POST - save new booking
+// Loo transpordi objekt (kasuta oma e-maili andmeid)
+const transporter = nodemailer.createTransport({
+  service: 'Gmail', // Või "Sendinblue", "Mailgun", "Outlook", jne
+  auth: {
+    user: 'lhoogand@gmail.com',
+    pass: 'yvvlqqfiqcpulkzj'
+  }
+});
+
 router.post('/', async (req, res) => {
-  console.log('POST body:', req.body); // ← Lisa see rida!
+  console.log('POST body:', req.body);
   try {
     const newBooking = new Booking(req.body);
     await newBooking.save();
-    res.status(201).json({ message: 'Booking saved' });
+
+    // Kui email olemas, saada kinnitus
+    if (req.body.email) {
+      const { nimi, kuupäev, kell, teenus, teenusepakkuja } = req.body;
+
+      const message = {
+        from: '"Ilusalong" <lhoogand@gmail.com>',
+        to: req.body.email,
+        subject: 'Broneeringu kinnitus',
+        text: `Tere, ${nimi}!\n\nTeie broneering teenusele "${teenus}" (${teenusepakkuja}) on kinnitatud:\n\nKuupäev: ${kuupäev}\nKell: ${kell}\n\nKohtumiseni!`
+      };
+
+      await transporter.sendMail(message);
+      console.log('Email saadetud:', req.body.email);
+    }
+
+    res.status(201).json({ message: 'Booking saved and email sent (if applicable)' });
   } catch (err) {
-    console.error('Salvestusviga:', err); // ← Lisa see ka!
-    res.status(500).json({ error: 'Failed to save booking' });
+    console.error('Salvestus- või saatmisviga:', err);
+    res.status(500).json({ error: 'Failed to save booking or send email' });
   }
 });
-
-// GET - fetch all bookings
-router.get('/', async (req, res) => {
-  try {
-    const bookings = await Booking.find().sort({ date: 1 });
-    res.json(bookings);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch bookings' });
-  }
-});
-
-export default router;
