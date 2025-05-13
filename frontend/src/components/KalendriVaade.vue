@@ -13,9 +13,22 @@ const showModal = ref(false);
 const selectedDate = ref('');
 const selectedProvider = ref('');
 const calendarRawEvents = ref([]);
+const teenused = ref([]);  // Teenuste loetelu
 
-// Teenuste loetelu modal dropdowniks
-const teenused = ['Juukselõikus', 'Maniküür', 'Massaaž', 'Puhkus'];
+// API teenuste laadimine
+// API teenuste laadimine
+const fetchServices = async () => {
+  try {
+    const res = await fetch('http://localhost:5000/api/teenused');
+    const data = await res.json();
+    // Kui teenus on objekt (näiteks { name: 'Juukselõikus', id: 1 })
+    teenused.value = data.map(service => service.nimi); // Siin kasuta vastavat välju teenuse objekti järgi
+    teenused.value.push('Puhkus'); // Lisa 'Puhkus' teenus
+  } catch (err) {
+    console.error('Viga teenuste laadimisel:', err);
+  }
+};
+
 
 // Modalist saadud broneering salvestamine
 const handleModalSubmit = async (data) => {
@@ -49,25 +62,23 @@ const calendarOptions = ref({
     showModal.value = true;
   },
   events: [],
-    eventClick: (info) => {
-  const clicked = calendarRawEvents.value.find(e => e.id === info.event.id);
-  if (clicked) {
-    selectedBooking.value = {
-      _id: clicked.id,
-      nimi: clicked.extendedProps.nimi,
-      teenus: info.event.title,
-      email: '', // kui vajad, pead laadima detailid eraldi
-      kuupäev: clicked.start.split('T')[0],
-      kell: clicked.start.split('T')[1],
-      lõpp: clicked.end.split('T')[1],
-      asukoht: clicked.extendedProps.asukoht,
-      teenusepakkuja: clicked.extendedProps.teenusepakkuja
-    };
-    showDetailModal.value = true;
+  eventClick: (info) => {
+    const clicked = calendarRawEvents.value.find(e => e.id === info.event.id);
+    if (clicked) {
+      selectedBooking.value = {
+        _id: clicked.id,
+        nimi: clicked.extendedProps.nimi,
+        teenus: info.event.title,
+        email: '', // kui vajad, pead laadima detailid eraldi
+        kuupäev: clicked.start.split('T')[0],
+        kell: clicked.start.split('T')[1],
+        lõpp: clicked.end.split('T')[1],
+        asukoht: clicked.extendedProps.asukoht,
+        teenusepakkuja: clicked.extendedProps.teenusepakkuja
+      };
+      showDetailModal.value = true;
+    }
   }
-}
-
-
 });
 
 // Unikaalsed teenusepakkujad dropdowni jaoks
@@ -105,7 +116,6 @@ const fetchBookings = async () => {
         }
       }));
 
-
     calendarRawEvents.value = events;
     calendarOptions.value.events = events;
   } catch (err) {
@@ -124,8 +134,12 @@ const filterEvents = () => {
   }
 };
 
-onMounted(fetchBookings);
+onMounted(() => {
+  fetchBookings();
+  fetchServices(); // Lae teenused andmebaasist
+});
 </script>
+
 
 <template>
   <div>

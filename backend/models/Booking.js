@@ -10,6 +10,7 @@ const bookingSchema = new mongoose.Schema({
   lõpp: String,
   nimi: String,
   email: String,
+  telefon: String,
 }, { timestamps: true });
 
 export default mongoose.model('Booking', bookingSchema, 'Broneeringud');

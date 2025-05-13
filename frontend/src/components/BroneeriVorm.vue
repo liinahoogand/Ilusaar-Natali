@@ -27,6 +27,8 @@ const form = ref({
   kuupäev: null,
   kell: '',
   nimi: '',
+  email: '',
+  telefon: '',
   teenusepakkuja: '',
   aeg: null,
   lõpp: null,
@@ -135,10 +137,15 @@ const updateFormField = (field, value) => {
             <NimeSamm 
               v-else-if="step === 5" 
               :nimi="form.nimi" 
+              :email="form.email"
+              :telefon="form.telefon"
               @update:nimi="updateFormField('nimi', $event)"
+              @update:email="updateFormField('email', $event)"
+              @update:telefon="updateFormField('telefon', $event)"
               @next="nextStep" 
               @prev="prevStep" 
             />
+
             
             <KinnituseSamm 
               v-else-if="step === 6" 

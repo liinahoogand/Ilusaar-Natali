@@ -21,13 +21,18 @@ router.post('/', async (req, res) => {
     await newBooking.save();
 
     if (req.body.email) {
-      const { nimi, kuupäev, kell, teenus, teenusepakkuja } = req.body;
+      const { nimi, kuupäev, kell, teenus } = req.body;
 
       const message = {
-        from: '"Ilusalong" <lhoogand@gmail.com>',
+        from: '"Ilusaar" <lhoogand@gmail.com>',
         to: req.body.email,
         subject: 'Broneeringu kinnitus',
-        text: `Tere, ${nimi}!\n\nTeie broneering teenusele "${teenus}" (${teenusepakkuja}) on kinnitatud:\n\nKuupäev: ${kuupäev}\nKell: ${kell}\n\nKohtumiseni!`
+        text: 
+        `Tere, ${nimi}!
+        \n\nTeie broneering teenusele "${teenus}" on kinnitatud:
+        \n\nKuupäev: ${kuupäev}
+        \nKell: ${kell}
+        \n\nKohtumiseni!`
       };
 
       await transporter.sendMail(message);

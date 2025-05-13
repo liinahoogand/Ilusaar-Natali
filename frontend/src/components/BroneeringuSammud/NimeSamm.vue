@@ -1,53 +1,59 @@
-<script setup lang="js">
+<script setup>
 import { computed } from 'vue';
 
-// Props ja emitid peavad olema defineeritud stringidena
-const props = defineProps(['nimi']);
-const emit = defineEmits(['update:nimi', 'prev', 'next']);
+const props = defineProps(['nimi', 'email', 'telefon']);
+const emit = defineEmits(['update:nimi', 'update:email', 'update:telefon', 'prev', 'next']);
 
-// Kontrolli, kas nimi on vähemalt 3 tähemärki
-const isValid = computed(() => props.nimi?.length >= 3);
+const isValid = computed(() => {
+  return props.nimi?.length >= 3 && props.email?.includes('@') && props.telefon?.length >= 7;
+});
 
-// Nime muutmine inputist
-const updateName = (event) => {
-  emit('update:nimi', event.target.value);
-};
 </script>
 
 <template>
   <div class="step-wrapper">
     <h2 class="step-title">Sisesta oma andmed</h2>
-    <p class="step-description">Palun sisesta oma nimi broneeringu jaoks</p>
+    <p class="step-description">Palun sisesta oma kontaktandmed</p>
     
     <div class="form-group">
       <label for="nimi">Nimi:</label>
-      <input 
-        type="text" 
-        id="nimi" 
-        :value="props.nimi" 
-        @input="updateName"
-        placeholder="Ees- ja perekonnanimi" 
-        class="form-control"
+      <input
+        id="nimi"
+        type="text"
+        :value="props.nimi"
+        @input="e => emit('update:nimi', e.target.value)"
+        required
+        placeholder="Ees- ja perekonnanimi"
       />
-      <p v-if="props.nimi && !isValid" class="validation-message">
-        Palun sisesta täisnimi (vähemalt 3 tähemärki)
-      </p>
     </div>
-    
+
+    <div class="form-group">
+      <label for="email">E-mail:</label>
+      <input
+        id="email"
+        type="email"
+        :value="props.email"
+        @input="e => emit('update:email', e.target.value)"
+        required
+        placeholder="email@domeen.ee"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="telefon">Telefon:</label>
+      <input
+        id="telefon"
+        type="tel"
+        :value="props.telefon"
+        @input="e => emit('update:telefon', e.target.value)"
+        required
+        placeholder="+372 5555 5555"
+      />
+    </div>
+
     <div class="button-group">
-      <button class="secondary" @click="emit('prev')">
-        <span class="button-icon">←</span>
-        Tagasi
-      </button>
-      
-      <button 
-        class="primary-button" 
-        :disabled="!isValid" 
-        @click="emit('next')"
-      >
-        Jätka
-        <span class="button-icon">→</span>
-      </button>
+      <button class="secondary" @click="emit('prev')">← Tagasi</button>
+      <button class="primary-button" :disabled="!isValid" @click="emit('next')">Jätka →</button>
     </div>
   </div>
 </template>
