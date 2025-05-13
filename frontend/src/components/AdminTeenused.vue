@@ -22,7 +22,9 @@ const fetchTeenused = async () => {
 // Salvestamine
 const salvestaMuutused = async (teenus) => {
   try {
-    const res = await fetch(`http://localhost:5000/api/teenused/${teenus._id.$oid}`, {
+    console.log("Saadan salvestamiseks:", teenus);
+
+      const res = await fetch(`http://localhost:5000/api/teenused/${teenus._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(teenus)
@@ -35,6 +37,60 @@ const salvestaMuutused = async (teenus) => {
     console.error(err);
   }
 };
+
+const kustutaTeenus = async (id) => {
+  if (!confirm('Oled kindel, et soovid kustutada selle teenuse?')) return;
+  try {
+    const res = await fetch(`http://localhost:5000/api/teenused/${id}`, {
+      method: 'DELETE'
+    });
+    if (!res.ok) throw new Error('Kustutamine ebaõnnestus');
+    teenused.value = teenused.value.filter(t => t._id !== id);
+  } catch (err) {
+    alert('Viga kustutamisel');
+    console.error(err);
+  }
+};
+
+
+const uusTeenus = ref({
+  nimi: '',
+  hind: '',
+  aeg: '',
+  teenusepakkuja: '',
+  Kuressaare: false,
+  Salme: false
+});
+
+const lisaUusTeenus = async () => {
+  try {
+    const res = await fetch('http://localhost:5000/api/teenused', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(uusTeenus.value)
+    });
+
+    if (!res.ok) throw new Error('Lisamine ebaõnnestus');
+
+    const uus = await res.json();
+    teenused.value.push(uus); // Lisa uute hulka
+    alert('Teenuse lisamine õnnestus');
+
+    // Nulli vorm
+    uusTeenus.value = {
+      nimi: '',
+      hind: '',
+      aeg: '',
+      teenusepakkuja: '',
+      Kuressaare: false,
+      Salme: false
+    };
+  } catch (err) {
+    alert('Viga teenuse lisamisel');
+    console.error(err);
+  }
+};
+
 
 onMounted(fetchTeenused);
 </script>
@@ -55,34 +111,61 @@ onMounted(fetchTeenused);
             <th>Aeg (min)</th>
             <th>Teenusepakkuja</th>
             <th>Asukohad</th>
-            <th></th>
+            <th>Toimingud</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="teenus in teenused" :key="teenus._id.$oid">
+
+          <!-- 🟢 Lisa uus teenus -->
+          <tr>
+            <td><input v-model="uusTeenus.nimi" placeholder="Teenuse nimi" /></td>
+            <td><input v-model="uusTeenus.hind" placeholder="Hind" /></td>
+            <td><input v-model="uusTeenus.aeg" placeholder="Aeg (min)" /></td>
+            <td><input v-model="uusTeenus.teenusepakkuja" placeholder="Teenusepakkuja" /></td>
+            <td>
+              <label>
+                <input type="checkbox" v-model="uusTeenus.Kuressaare" />
+                Kuressaare
+              </label>
+              <label>
+                <input type="checkbox" v-model="uusTeenus.Salme" />
+                Salme
+              </label>
+            </td>
+            <td>
+              <button @click="lisaUusTeenus">➕ Lisa</button>
+            </td>
+          </tr>
+
+          <!-- 🔁 Olemasolevad teenused -->
+          <tr v-for="teenus in teenused" :key="teenus._id">
             <td><input v-model="teenus.nimi" /></td>
             <td><input v-model="teenus.hind" /></td>
             <td><input v-model="teenus.aeg" /></td>
             <td><input v-model="teenus.teenusepakkuja" /></td>
             <td>
               <label>
-                <input type="checkbox" v-model="teenus.Kuressaare" true-value="true" false-value="false" />
+                <input type="checkbox" v-model="teenus.Kuressaare" />
                 Kuressaare
               </label>
               <label>
-                <input type="checkbox" v-model="teenus.Salme" true-value="true" false-value="false" />
+                <input type="checkbox" v-model="teenus.Salme" />
                 Salme
               </label>
             </td>
             <td>
-              <button @click="salvestaMuutused(teenus)">💾 Salvesta</button>
+              <button @click="salvestaMuutused(teenus)">💾</button>
+              <button @click="kustutaTeenus(teenus._id)">🗑️</button>
             </td>
           </tr>
+
         </tbody>
       </table>
     </div>
   </div>
 </template>
+
+
 
 <style scoped>
 .admin-table {

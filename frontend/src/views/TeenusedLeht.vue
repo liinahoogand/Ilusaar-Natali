@@ -1,108 +1,110 @@
 <template>
-    <NavBar />
-    <div class="teenused-page container">
-      <h1>Teenused ja hinnakiri</h1>
-  
-      <div class="teenused-container">
-  <!-- Ilusaar -->
-  <div class="provider-column">
-    <h2>Ilusaar</h2>
-    <div v-for="(services, category) in servicesByProvider['Ilusaar']" :key="category">
-      <h3>{{ category }}</h3>
-      <div v-for="service in services" :key="service._id" class="teenus-blokk">
-        <h4>{{ service.nimi }}</h4>
-        <p>{{ service.selgitus }}</p>
-        <p><strong>Hind:</strong> {{ service.hind }}</p>
-        <p><strong>Kestvus:</strong> {{ formatDuration(service.aeg) }}</p>
+  <NavBar />
+  <div class="teenused-page container">
+    <h1>Teenused ja hinnakiri</h1>
+
+    <div class="teenused-container">
+      <!-- Teenusepakkujad kõrvuti -->
+      <div
+        v-for="(categories, provider) in servicesByProvider"
+        :key="provider"
+        class="provider-column"
+      >
+        <h2>{{ provider }}</h2>
+
+        <!-- Kategooriad -->
+        <div
+          v-for="(services, category) in categories"
+          :key="category"
+          class="kategooria-blokk"
+        >
+          <h3>{{ category }}</h3>
+          <div class="teenuste-loetelu">
+            <div
+              v-for="service in services"
+              :key="service._id"
+              class="teenus-rida-wrapper"
+            >
+              <div class="teenus-rida">
+                <h4 class="teenus-nimi">{{ service.nimi }}</h4>
+                <span class="teenus-hind">{{ service.hind }}</span>
+                <span class="teenus-kestus">{{ formatDuration(service.aeg) }}</span>
+              </div>
+              <p class="teenus-selgitus">{{ service.selgitus }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Natali -->
-  <div class="provider-column">
-    <h2>Natali</h2>
-    <div v-for="(services, category) in servicesByProvider['Natali']" :key="category">
-      <h3>{{ category }}</h3>
-      <div v-for="service in services" :key="service._id" class="teenus-blokk">
-        <h4>{{ service.nimi }}</h4>
-        <p>{{ service.selgitus }}</p>
-        <p><strong>Hind:</strong> {{ service.hind }}</p>
-        <p><strong>Kestvus:</strong> {{ formatDuration(service.aeg) }}</p>
-      </div>
-    </div>
-  </div>
-</div>
+  <AppFooter />
+</template>
 
 
-    </div>
-    <AppFooter />
-  </template>
-  
-  <script>
-  import NavBar from '@/components/NavBar.vue';
-  import AppFooter from '@/components/AppFooter.vue';
-  
-  export default {
-    name: "TeenusedView",
-    components: {
-      NavBar,
-      AppFooter
-    },
-    data() {
-  return {
-    servicesByProvider: {}
-  };
-},
-mounted() {
-  fetch("http://localhost:5000/api/teenused")
-    .then(res => res.json())
-    .then(data => {
-      const grouped = {};
+<script>
+import NavBar from '@/components/NavBar.vue';
+import AppFooter from '@/components/AppFooter.vue';
 
-      data.forEach(service => {
-        const provider = service.teenusepakkuja;
-        const category = service.kategooria || "Muu";
+export default {
+  name: "TeenusedView",
+  components: {
+    NavBar,
+    AppFooter
+  },
+  data() {
+    return {
+      servicesByProvider: {}
+    };
+  },
+  mounted() {
+    fetch("http://localhost:5000/api/teenused")
+      .then(res => res.json())
+      .then(data => {
+        const grouped = {};
 
-        if (!grouped[provider]) {
-          grouped[provider] = {};
-        }
+        data.forEach(service => {
+          const provider = service.teenusepakkuja;
+          const category = service.kategooria || "Muu";
 
-        if (!grouped[provider][category]) {
-          grouped[provider][category] = [];
-        }
+          if (!grouped[provider]) {
+            grouped[provider] = {};
+          }
 
-        grouped[provider][category].push(service);
+          if (!grouped[provider][category]) {
+            grouped[provider][category] = [];
+          }
+
+          grouped[provider][category].push(service);
+        });
+
+        this.servicesByProvider = grouped;
       });
+  },
+  methods: {
+    formatDuration(minutes) {
+      const mins = parseInt(minutes, 10);
+      if (isNaN(mins)) return "";
 
-      this.servicesByProvider = grouped;
-    });
-},
+      if (mins < 60) return `${mins} min`;
 
-    methods: {
-      formatDuration(minutes) {
-        const mins = parseInt(minutes, 10);
-        if (isNaN(mins)) return "";
-  
-        if (mins < 60) return `${mins} min`;
-  
-        const hours = Math.floor(mins / 60);
-        const remaining = mins % 60;
-  
-        if (remaining === 0) return `${hours}h`;
-        return `${hours}h ${remaining}min`;
-      }
+      const hours = Math.floor(mins / 60);
+      const remaining = mins % 60;
+
+      if (remaining === 0) return `${hours}h`;
+      return `${hours}h ${remaining}min`;
     }
-  };
-  </script>
-  
-  
-  <style scoped>
-  .container {
-    max-width: 900px;
-    margin: auto;
-    padding: 2rem;
   }
-  .teenused-container {
+};
+</script>
+
+<style scoped>
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.teenused-container {
   display: flex;
   gap: 2rem;
   justify-content: space-between;
@@ -110,17 +112,73 @@ mounted() {
 }
 
 .provider-column {
-  flex: 1 1 45%;
+  flex: 1 1 48%;
   max-width: 48%;
 }
 
-.teenus-blokk {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: #f9f9f9;
-  border-radius: 10px;
+.provider-column h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+  border-bottom: 2px solid #02512B;
+  padding-bottom: 0.5rem;
 }
 
-  
-  </style>
-  
+.kategooria-blokk {
+  background-color: #96b2a2;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.kategooria-blokk h3 {
+  margin-bottom: 1rem;
+  color: black;
+  font-size: 1.3rem;
+  border-left: 4px solid #02512B;
+  padding-left: 0.5rem;
+}
+
+.teenuste-loetelu {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.teenus-rida-wrapper {
+  background: rgb(243, 248, 244);
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.teenus-rida {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.teenus-nimi {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0;
+  flex: 1;
+}
+
+.teenus-hind,
+.teenus-kestus {
+  font-weight: normal;
+  margin-left: 1rem;
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.teenus-selgitus {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+</style>

@@ -24,6 +24,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Uuenda teenust
 router.put('/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -35,4 +36,21 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// Kustuta teenus
+router.delete('/:id', async (req, res) => {
+  try {
+    const result = await Service.deleteOne({ _id: req.params.id });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Teenust ei leitud' });
+    }
+
+    res.status(200).json({ message: 'Teenus kustutatud' });
+  } catch (err) {
+    console.error('Viga teenuse kustutamisel:', err);
+    res.status(500).json({ error: 'Teenuse kustutamine ebaõnnestus' });
+  }
+});
+
 export default router;
+

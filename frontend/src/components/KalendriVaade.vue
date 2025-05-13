@@ -5,7 +5,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import BookingModal from './BookingModal.vue';
+import BookingDetailModal from './BookingDetailModal.vue';
 
+const selectedBooking = ref(null);
+const showDetailModal = ref(false);
 const showModal = ref(false);
 const selectedDate = ref('');
 const selectedProvider = ref('');
@@ -46,9 +49,25 @@ const calendarOptions = ref({
     showModal.value = true;
   },
   events: [],
-  eventClick: (info) => {
-    alert(`Broneering: ${info.event.title}\nAeg: ${info.event.start.toLocaleString()}`);
+    eventClick: (info) => {
+  const clicked = calendarRawEvents.value.find(e => e.id === info.event.id);
+  if (clicked) {
+    selectedBooking.value = {
+      _id: clicked.id,
+      nimi: clicked.extendedProps.nimi,
+      teenus: info.event.title,
+      email: '', // kui vajad, pead laadima detailid eraldi
+      kuupäev: clicked.start.split('T')[0],
+      kell: clicked.start.split('T')[1],
+      lõpp: clicked.end.split('T')[1],
+      asukoht: clicked.extendedProps.asukoht,
+      teenusepakkuja: clicked.extendedProps.teenusepakkuja
+    };
+    showDetailModal.value = true;
   }
+}
+
+
 });
 
 // Unikaalsed teenusepakkujad dropdowni jaoks
@@ -73,16 +92,19 @@ const fetchBookings = async () => {
     const events = data
       .filter(b => b.kuupäev && b.kell && b.lõpp)
       .map(b => ({
+        id: b._id, // ← see on väga oluline
         title: `${b.teenus} (${b.nimi})`,
         start: `${b.kuupäev.slice(0, 10)}T${b.kell}`,
         end: `${b.kuupäev.slice(0, 10)}T${b.lõpp}`,
         backgroundColor: getColorForProvider(b.teenusepakkuja),
         extendedProps: {
+          _id: b._id, // ← siia lisa see!
           asukoht: b.asukoht,
           teenusepakkuja: b.teenusepakkuja,
           nimi: b.nimi
         }
       }));
+
 
     calendarRawEvents.value = events;
     calendarOptions.value.events = events;
@@ -117,6 +139,13 @@ onMounted(fetchBookings);
 
     <FullCalendar :options="calendarOptions" />
 
+    <BookingDetailModal
+      v-if="showDetailModal"
+      :booking="selectedBooking"
+      @close="showDetailModal = false"
+      @deleted="fetchBookings"
+    />
+
     <!-- Booking Modal ainult siis kui showModal === true -->
     <BookingModal
       v-if="showModal"
@@ -126,6 +155,8 @@ onMounted(fetchBookings);
       @submit="handleModalSubmit"
       @close="showModal = false"
     />
+
+
   </div>
 </template>
 
