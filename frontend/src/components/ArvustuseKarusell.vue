@@ -41,7 +41,7 @@
           { rating: 5, comment: "Väga hea teenindus. Olen väga rahul soenguga. Tööd teevad kiiresti ja hästi.", author: "Olga" },
           { rating: 5, comment: "Väga sõbralik ja hea teenindus iga kord. Ootan alati, et tagasi tulla. Töö on hea ja kvaliteetne. Olen soovitanud ka tuttavatele!", author: "" },
           { rating: 5, comment: "Super! Oma ala professionaalid, töö laitmatu, lahkud alati hea tujuga!", author: "" },
-          { rating: 5, comment: "Siin on tööl vöga toredad naised. Teevad oma tööd südamega. HEa tuju ka lisaks tagatud.", author: "" }
+          { rating: 5, comment: "Siin on tööl vöga toredad naised. Teevad oma tööd südamega. Hea tuju ka lisaks tagatud.", author: "" }
 
         ],
         currentIndex: 0,
@@ -75,7 +75,8 @@
 .review-carousel {
   text-align: center;
   padding: 2rem 0;
-  background: #fafafa;
+  margin-top: 20px;
+  margin-bottom: 0px;
 }
 
 .carousel-wrapper {
@@ -91,12 +92,20 @@
   gap: 1rem;
 }
 
+h2 {
+  font-family: 'Tangerine', serif;
+  font-size: 55px;
+  font-weight: 900;
+  color: #E6C36A;
+  margin-bottom: 30px;
+}
+
 .review-card {
-  background: #fff;
+  background: #ffff;
   border-radius: 12px;
   padding: 1rem;
   width: 250px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px #E6C36A;
   transform: scale(0.9);
   opacity: 0.6;
   transition: all 0.3s ease;
@@ -105,7 +114,9 @@
 .review-card.active {
   transform: scale(1.05);
   opacity: 1;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px #E6C36A;
+  padding: 1rem;
+
 }
 
 .stars {
@@ -120,11 +131,6 @@
 .comment {
   font-style: italic;
   margin: 0.5rem 0;
-}
-
-.author {
-  font-weight: bold;
-  color: #333;
 }
 
 .nav-buttons {

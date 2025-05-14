@@ -17,13 +17,13 @@
   
   <style scoped>
 .hero-image {
-  height: 70vh;
+  height: 80vh;
   background-image: url('../assets/images/kodulehe-pilt-tekstiga.png');
   background-position: center top; /* Nihutab pilti üles */
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  margin-top: 20px;
+  margin-top: 7px;
 }
 .hero-text {
   position: absolute;

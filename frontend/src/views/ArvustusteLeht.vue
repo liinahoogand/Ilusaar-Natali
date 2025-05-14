@@ -3,6 +3,9 @@
 
     <div class="arvustused-page">
       <h1>Klientide arvustused</h1>
+      <div class="divider"></div>
+      <h2>Oled meid hiljuti külastanud?</h2>
+
 
       <!-- Arvustuse lisamise vorm -->
 <!-- Vormi avamise nupp -->
@@ -12,7 +15,7 @@
 
 <!-- Arvustuse lisamise vorm -->
 <div v-if="showForm" class="form-section">
-  <h2>Lisa oma arvustus</h2>
+  <h3>Kirjuta arvustus</h3>
   <form @submit.prevent="submitReview">
     <input
       type="text"
@@ -38,7 +41,7 @@
       <div class="arvustuste-list">
         <div v-for="(review, index) in reviews" :key="index" class="arvustus">
           <div class="arvustus-header">
-            <strong>{{ review.author }}</strong>
+            <p>{{ review.author }}</p>
             <span class="kuupaev">{{ review.date }}</span>
           </div>
           <div class="stars">
@@ -71,24 +74,12 @@
       return {
         showForm: false,
         reviews: [
-          {
-            rating: 5,
-            comment: "Väga sõbralik teenindus!",
-            author: "Kadi",
-            date: "2024-11-03",
-          },
-          {
-            rating: 4,
-            comment: "Kiire ja professionaalne!",
-            author: "Mart",
-            date: "2024-12-20",
-          },
-          {
-            rating: 5,
-            comment: "Väga rahul lõikusega!",
-            author: "Anneli",
-            date: "2025-01-10",
-          },
+          { rating: 5, comment: "Alati väga paindlik kättesaadavus ja sõbralikud näod. Rääkimata naljast ja naerust!", author: "-Salongi külastaja-", date: "2025-05-07" },
+          { rating: 5, comment: "Siin on tööl väga toredad naised. Teevad oma tööd südamega. Hea tuju ka lisaks tagatud!", author: "-Salongi külastaja-", date: "2025-05-06" },
+          { rating: 5, comment: "Väga hea teenindus. Olen väga rahul soenguga. Tööd teevad kiiresti ja hästi.", author: "Olga", date: "2025-05-06" },
+          { rating: 5, comment: "Väga sõbralik ja hea teenindus iga kord. Ootan alati, et tagasi tulla. Töö on hea ja kvaliteetne. Olen soovitanud ka tuttavatele!", author: "-Salongi külastaja-", date: "2025-05-06" },
+          { rating: 5, comment: "Super! Oma ala professionaalid, töö laitmatu, lahkud alati hea tujuga!", author: "-Salongi külastaja-", date: "2025-05-06" },
+          { rating: 5, comment: "Siin on tööl vöga toredad naised. Teevad oma tööd südamega. Hea tuju ka lisaks tagatud.", author: "-Salongi külastaja-", date: "2025-05-06" }
         ],
         newReview: {
           author: "",
@@ -123,12 +114,47 @@
     padding: 1rem;
   }
   
-  h1,
+  h1{
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'Tangerine', serif;
+    font-size: 70px;
+    font-weight: 900;
+    color: #E6C36A;
+    margin: 20px 0 20px;
+    padding-top: 10px;
+  }
+
+  .divider {
+    width: 580px;
+    height: 1px;
+    background-color: #E6C36A;
+    margin: 0 auto 50px;
+    border-radius: 2px;
+  }
+
   h2 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 300;
+    color: #E6C36A;
+    margin: 20px 0 20px;
+    padding-top: 10px;
   }
   
+  h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: #E6C36A;
+    margin: 20px 0 20px;
+    padding-top: 10px;
+  }
+
   .arvustuste-list {
     display: flex;
     flex-direction: column;
@@ -140,7 +166,7 @@
     background: #fff;
     border-radius: 10px;
     padding: 1rem 1.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px #ffe6a7;
   }
   
   .arvustus-header {
@@ -169,10 +195,11 @@
   
   /* Vormistiilid */
   .form-section {
-    background: #f9f9f9;
+    background: #ffe6a75b;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 4px #ffe6a7;
+    margin-bottom: 30px;
   }
   
   form {
@@ -185,23 +212,31 @@
   textarea,
   select {
     padding: 0.7rem;
-    border: 1px solid #ccc;
+    border: 1px solid ffe6a7;
     border-radius: 6px;
     font-size: 1rem;
+    margin-bottom: 30px;
   }
   
-  button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #555;
-  }
+ button {
+  background-color: white; /* Valge taust */
+  color: #E6C36A; /* Kuldne tekst */
+  font-family: 'Quicksand', serif;
+  font-weight: 600;
+  border: 2px solid #E6C36A; /* Kuldne piir */
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: block; /* Nupp keskel */
+  margin: 0 auto; /* Keskendab nupu horisontaalselt */
+  margin-block: 10px;
+}
+
+button:hover {
+  background-color: #E6C36A; /* Kuldne taust hoveri korral */
+  color: white; /* Tekst muutub valgeks hoveri korral */
+}
+
   </style>
   
