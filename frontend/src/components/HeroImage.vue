@@ -1,6 +1,13 @@
 <template>
-    <div class="hero-image"></div>
+  <div class="hero-image">
+    <div class="hero-text">
+      <p>Kõik</p>
+      <p>ühes</p>
+      <p>kohas</p>
+    </div>
+  </div>
 </template>
+
   
   <script>
   export default {
@@ -9,15 +16,27 @@
   </script>
   
   <style scoped>
-  .hero-image {
-    height: 70vh;
-    background-image:
-    url('../assets/images/kodulehe-pilt-tekstiga.png'); /* Muuda vastavalt pildile */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    margin-top: 30px;
-  }
+.hero-image {
+  height: 70vh;
+  background-image: url('../assets/images/kodulehe-pilt-tekstiga.png');
+  background-position: center top; /* Nihutab pilti üles */
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  margin-top: 20px;
+}
+.hero-text {
+  position: absolute;
+  font-family: 'Playfair Display', serif;
+  top: 50%;
+  left: 60%; /* Määrab kui paremal ta on – kohanda nt 25% või 30% */
+  transform: translateY(-50%);
+  color: white;
+  font-size: 100px;
+  font-weight: bold;
+  text-align: left;
+  line-height: 0.5;
+  z-index: 2;
+}
   </style>
   

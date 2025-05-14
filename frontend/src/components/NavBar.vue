@@ -31,7 +31,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
   padding-bottom: 0px;
   font-family: 'Quicksand', sans-serif;
   position: sticky;
@@ -50,7 +50,7 @@ export default {
 }
 
 .logo img {
-  width: 110px;
+  width: 120px;
 }
 
 /* Ühine linkide stiil */
