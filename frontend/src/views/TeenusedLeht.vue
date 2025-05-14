@@ -103,6 +103,14 @@ export default {
   margin: auto;
   padding: 2rem;
 }
+h1 {
+  font-family: "Tangerine", serif;
+  text-align: center;
+  font-size: 80px;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  color: #02512B;
+}
 
 .teenused-container {
   display: flex;
@@ -117,9 +125,11 @@ export default {
 }
 
 .provider-column h2 {
-  font-size: 1.8rem;
+  font-family: "Tangerine", serif;
+  font-size: 55px;
+  font-weight: 900;
+  color: #02512B;
   margin-bottom: 1rem;
-  color: #333;
   border-bottom: 2px solid #02512B;
   padding-bottom: 0.5rem;
 }
@@ -134,8 +144,10 @@ export default {
 
 .kategooria-blokk h3 {
   margin-bottom: 1rem;
-  color: black;
-  font-size: 1.3rem;
+  color: #02512B;
+  margin-top: auto;
+  font-weight: 500;
+  font-size: 30px;
   border-left: 4px solid #02512B;
   padding-left: 0.5rem;
 }
@@ -149,7 +161,7 @@ export default {
 .teenus-rida-wrapper {
   background: rgb(243, 248, 244);
   border-radius: 6px;
-  padding: 1rem;
+  padding: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -161,8 +173,8 @@ export default {
 }
 
 .teenus-nimi {
-  font-weight: bold;
-  font-size: 1.1rem;
+  font-weight: 500;
+  font-size: 1.3rem;
   margin: 0;
   flex: 1;
 }
@@ -177,6 +189,7 @@ export default {
 
 .teenus-selgitus {
   margin-top: 0.5rem;
+  margin-bottom: auto;
   font-size: 0.95rem;
   color: #555;
 }

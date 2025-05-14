@@ -58,7 +58,7 @@ defineProps({
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: white;
+  background-color: #f5fef9;
   border: 2px solid var(--color-neutral-300);
   display: flex;
   align-items: center;

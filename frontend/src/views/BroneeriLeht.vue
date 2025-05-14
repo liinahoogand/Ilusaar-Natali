@@ -21,12 +21,13 @@
   </script>
   
   <style scoped>
-  .app-container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
+.app-container {
+  width: 100%;
+  height: 80vh; /* Täiskõrgus, et saaks vertikaalselt keskendada */
+  display: flex;
+  align-items: center;   /* Vertikaalne keskjoondus */
+  justify-content: center; /* Horisontaalne keskjoondus */
+  padding: 20px;
+}
+
   </style>

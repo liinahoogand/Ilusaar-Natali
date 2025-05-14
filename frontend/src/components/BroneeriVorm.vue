@@ -178,9 +178,9 @@ const updateFormField = (field, value) => {
 }
 
 .booking-title {
-  font-size: 60px;
+  font-size: 80px;
   font-family: 'Tangerine', serif;
-  color: white;
+  color: #02512B;
   margin-bottom: 50px;
   margin-top: 20px;
   text-align: center;
@@ -196,7 +196,7 @@ const updateFormField = (field, value) => {
 .step-content {
   margin-top: 24px;
   font-family: 'Playfair Display', serif;
-  color: white;
+  color: #02512B;
 
 }
 
