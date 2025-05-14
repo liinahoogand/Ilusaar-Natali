@@ -1,25 +1,26 @@
 <template>
   <NavBar />
   <div class="meist-info">
-    <div class="pilt">
-      <img src="../assets/images/natali&renata.png" alt="Renata ja Natali" />
-    </div>
-
-    <!-- Lisatud kaks veergu -->
-    <div class="columns">
-      <div class="column column-renata">
-        <h3>Natali</h3>
-        <p>Natali on spetsialiseerunud juuksuriteenustele ja teda inspireerivad pidevalt uued trendid.</p>
+    <div class="pildid">
+      <div class="pilt pilt-renata">
+        <img src="../assets/images/renata.jpg" alt="Renata" />
+        <div class="column column-renata">
+          <h3>Renata</h3>
+          <p>Renata on Ilusaare salongi asutaja, kes pakub tänaseks mitmekesist valikut iluteenuseid. Ta on professionaalselt õppinud erinevaid küünetehnikaid ja ripsmehooldust, lisaks on ta viimastel aastatel täiendanud end näohoolduste ning püsimeigi vallas.</p>        
+        </div>
       </div>
-      <div class="column column-natali">
-      
-        <h3>Renata</h3>
-        <p>Renata on meie ilusalongi üks looja, kes armastab ilu ja eestimaiseid traditsioone.</p>
+      <div class="pilt pilt-natali">
+        <img src="../assets/images/natali.jpg" alt="Natali" />
+        <div class="column column-natali">
+          <h3>Natali</h3>
+          <p>Natali on meie andekas juuksur, kellel on aastatepikkune kogemus ning kellel oli varem ka oma salong. Meil on ülihea meel, et ta on nüüd osa meie tiimist. Ta on läbinud mitmeid professionaalseid koolitusi ja on väga osav oma töös, alati hooliv ja täpne.</p>        
+        </div>
       </div>
     </div>
   </div>
   <AppFooter />
 </template>
+
 
 <script>
 import NavBar from '@/components/NavBar.vue';
@@ -34,53 +35,58 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
 
+<style scoped lang="scss">
 .meist-info {
   text-align: center;
+  margin-top: 30px;
+}
+
+.pildid {
+  display: flex; /* Flex-konteiner, et kuvada pilte kõrvuti */
+  justify-content: center; /* Keskjoondab pilte */
+  gap: 30px; /* Veerude vaheline kaugus */
 }
 
 .pilt {
-  margin-top: 30px;
+  position: relative;
+  width: 30%; /* Piltide suurus - 45% laius */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .pilt img {
-  width: 60%; /* Väiksemaks pilt */
-  margin: 0 auto; /* Keskjoondab pildi */
+  width: 100%; /* Pilt täidab kogu konteineri laiuse */
+  border-radius: 8px;
   display: block;
-}
+  margin-bottom: 30px;
 
-.columns {
-  display: flex;
-  justify-content: center; /* Keskjoondab veerud */
-  margin-top: 30px;
-  gap: 20px;
 }
 
 .column {
-  width: 45%; /* Iga veerg 45% laiune */
-  text-align: center; /* Keskjoondab teksti igas veerus */
   padding: 20px;
-  border-radius: 8px;
+  text-align: center; /* Keskjoondab teksti */
 }
 
 .column h3 {
-  font-size: 1.5rem;
+  font-family: 'Tangerine', serif;
+  color: #E6C36A;
+  font-size: 60px;
   margin-bottom: 10px;
+  margin-top: 0px;
   font-weight: bold;
 }
 
 .column p {
-  font-size: 1rem;
+  font-size: 19px;
+  font-family: 'Playfair Display', serif;
   color: #555;
 }
 
 .column-renata {
-  background-color: #e6c36a56; /* Sinine taust Renatale */
+  background-color: #ffe6a75b;
 }
-
 .column-natali {
-  background-color: #e6c36a45; /* Roosa taust Natali jaoks */
+  background-color: #ffe6a75b;
 }
-
 </style>
