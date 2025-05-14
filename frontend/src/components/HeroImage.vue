@@ -18,7 +18,7 @@
   <style scoped>
 .hero-image {
   height: 80vh;
-  background-image: url('../assets/images/kodulehe-pilt-tekstiga.png');
+  background-image: url('../assets/images/kodulehe-pilt-tekstiga.jpg');
   background-position: center top; /* Nihutab pilti üles */
   background-repeat: no-repeat;
   background-size: cover;
