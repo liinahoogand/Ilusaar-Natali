@@ -5,6 +5,7 @@ import Broneeri from "@/views/BroneeriLeht.vue";
 import Arvustused from "@/views/ArvustusteLeht.vue";
 import Teenused from "@/views/TeenusedLeht.vue";
 import Admin from "@/views/AdminLeht.vue";
+import SisseLogimine from "@/views/SisseLogimine.vue";
 
 const routes = [
   {
@@ -32,10 +33,17 @@ const routes = [
     name: 'Teenused',
     component: Teenused
   },
-  { path: '/admin',
+  { path: '/sisselogimine',
+    name: 'SisseLogimine',
+    component: SisseLogimine
+  },
+  {
+    path: '/admin',
     name: 'Admin',
-    component: Admin
+    component: Admin,
+    meta: { requiresAuth: true }
   }
+
 ]
 
 const router = createRouter({
@@ -46,7 +54,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const defaultTitle = 'Ilusaar';
   document.title = to.meta.title || defaultTitle;
-  next();
+
+  // Kontrolli, kas sisselogimine on vajalik
+  const token = localStorage.getItem('token');
+  if (to.meta.requiresAuth && !token) {
+    next('/sisselogimine');
+  } else {
+    next();
+  }
 });
+
 
 export default router

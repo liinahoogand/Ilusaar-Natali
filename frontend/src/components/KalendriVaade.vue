@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import etLocale from '@fullcalendar/core/locales/et';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -50,6 +51,7 @@ const handleModalSubmit = async (data) => {
 // Kalendri seaded
 const calendarOptions = ref({
   plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+  locale: etLocale,
   initialView: 'dayGridMonth',
   headerToolbar: {
     left: 'prev,next today',
@@ -58,7 +60,7 @@ const calendarOptions = ref({
   },
   selectable: true,
   select: (info) => {
-    selectedDate.value = info.startStr.slice(0, 10); // ainult kuupäev
+    selectedDate.value = info.startStr.slice(0, 10);
     showModal.value = true;
   },
   events: [],
@@ -69,7 +71,7 @@ const calendarOptions = ref({
         _id: clicked.id,
         nimi: clicked.extendedProps.nimi,
         teenus: info.event.title,
-        email: '', // kui vajad, pead laadima detailid eraldi
+        email: '',
         kuupäev: clicked.start.split('T')[0],
         kell: clicked.start.split('T')[1],
         lõpp: clicked.end.split('T')[1],
@@ -80,6 +82,7 @@ const calendarOptions = ref({
     }
   }
 });
+
 
 // Unikaalsed teenusepakkujad dropdowni jaoks
 const uniqueProviders = computed(() => {

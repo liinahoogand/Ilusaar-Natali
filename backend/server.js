@@ -8,17 +8,16 @@ import cors from 'cors';
 import connectDB from './utils/db.js';
 import servicesRoute from './routes/services.js';
 import bookingRoutes from './routes/booking.js';
+import loginRoutes from './routes/login.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 dotenv.config();
 const app = express();
 
-// Ühenda MongoDB
 connectDB();
 
-const conn = mongoose.connection; 
-
+const conn = mongoose.connection;
 let gfs;
 conn.once('open', () => {
   gfs = Grid(conn.db, mongoose.mongo);
@@ -28,17 +27,14 @@ conn.once('open', () => {
 app.use(cors());
 app.use(express.json());
 
-// Multeri ja GridFsStorage seadistused
+// Failide üleslaadimine
 const storage = new GridFsStorage({
   url: process.env.MONGO_URI,
-  file: (req, file) => {
-    return {
-      filename: file.originalname,
-      bucketName: 'uploads',
-    };
-  },
+  file: (req, file) => ({
+    filename: file.originalname,
+    bucketName: 'uploads',
+  }),
 });
-
 const upload = multer({ storage });
 
 app.post('/upload', upload.single('file'), (req, res) => {
@@ -60,20 +56,18 @@ app.get('/image/:id', async (req, res) => {
 // API routes
 app.use('/api/teenused', servicesRoute);
 app.use('/api/broneeringud', bookingRoutes);
+app.use('/api/login', loginRoutes);
 
-// Serve static files from the Vue app (frontend/dist)
-import { __dirname } from 'path';
+// Serve frontend
 const __filename = fileURLToPath(import.meta.url);
 const backendDir = path.dirname(__filename);
-
-// Serve Vue frontend static assets
 app.use(express.static(path.join(backendDir, '../frontend/dist')));
 
-// Serve the index.html for any non-API routes (single-page app)
 app.get('*', (req, res) => {
   res.sendFile(path.join(backendDir, '../frontend/dist/index.html'));
 });
 
-// Porti seadistamine ja serveri käivitamine
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server töötab pordil ${PORT}`));
+
