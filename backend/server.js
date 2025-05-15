@@ -24,7 +24,12 @@ conn.once('open', () => {
   gfs.collection('uploads');
 });
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://ilusaar.ee',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Failide üleslaadimine

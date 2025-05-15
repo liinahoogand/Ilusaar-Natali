@@ -3,7 +3,15 @@ import Kasutaja from '../models/Kasutaja.js';
 
 const router = express.Router();
 
-// POST /api/login
+router.get("/", async (req, res) => {
+  try {
+    const kasutajad = await Kasutaja.find();
+    res.json(kasutajad);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.post('/', async (req, res) => {
   const { kasutajanimi, parool } = req.body;
 

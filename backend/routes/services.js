@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
 // Lisa uus teenus
 router.post("/", async (req, res) => {
   try {
+    
     const newService = new Service(req.body);
     const saved = await newService.save();
     res.status(201).json(saved);

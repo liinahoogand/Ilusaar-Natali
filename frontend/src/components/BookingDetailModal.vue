@@ -3,44 +3,44 @@
     <div class="modal-content">
       <h2>Broneeringu detailid</h2>
      <form @submit.prevent="updateBooking">
-  <label>Teenus:
-    <input v-model="form.teenus" required />
-  </label>
+      <label>Teenus:
+        <input v-model="form.teenus" required />
+      </label>
 
-  <label>Teenusepakkuja:
-    <input v-model="form.teenusepakkuja" required />
-  </label>
+      <label>Teenusepakkuja:
+        <input v-model="form.teenusepakkuja" required />
+      </label>
 
-  <label>Kliendi nimi:
-    <input v-model="form.nimi" required />
-  </label>
+      <label>Kliendi nimi:
+        <input v-model="form.nimi" required />
+      </label>
 
-  <label>Email:
-    <input v-model="form.email" type="email" />
-  </label>
+      <label>Email:
+        <input v-model="form.email" type="email" />
+      </label>
 
-  <label>Kuupäev:
-    <input v-model="form.kuupäev" type="date" required />
-  </label>
+      <label>Kuupäev:
+        <input v-model="form.kuupäev" type="date" required />
+      </label>
 
-  <label>Algusaeg:
-    <input v-model="form.kell" type="time" required />
-  </label>
+      <label>Algusaeg:
+        <input v-model="form.kell" type="time" required />
+      </label>
 
-  <label>Lõppaeg:
-    <input v-model="form.lõpp" type="time" required />
-  </label>
+      <label>Lõppaeg:
+        <input v-model="form.lõpp" type="time" required />
+      </label>
 
-  <label>Asukoht:
-    <input v-model="form.asukoht" />
-  </label>
+      <label>Asukoht:
+        <input v-model="form.asukoht" />
+      </label>
 
-  <div class="modal-actions">
-    <button type="submit">💾 Salvesta muudatused</button>
-    <button type="button" @click="deleteBooking">🗑 Kustuta</button>
-    <button type="button" @click="$emit('close')">Sulge</button>
-  </div>
-</form>
+      <div class="modal-actions">
+        <button type="submit">💾 Salvesta muudatused</button>
+        <button type="button" class="delete-button" @click="deleteBooking">🗑 Kustuta</button>
+        <button type="button" @click="$emit('close')">Sulge</button>
+      </div>
+    </form>
 
     </div>
   </div>
@@ -139,10 +139,55 @@ const deleteBooking = async () => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Lisab vahed väljade vahele */
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #333;
+}
+
+input {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
 .modal-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
+
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #3ecf8e;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button[type="button"]:last-child {
+  background-color: #ccc;
+  color: black;
+}
+.delete-button {
+  background-color: #e74c3c; /* Punane */
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Tumedam punane hoveril */
+}
+
+
 </style>

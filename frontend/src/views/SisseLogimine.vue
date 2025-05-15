@@ -31,28 +31,32 @@ const login = async () => {
     const res = await fetch('https://ilusaar-backend.onrender.com/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: username.value, password: password.value })
+      body: JSON.stringify({
+        kasutajanimi: username.value, 
+        parool: password.value 
+      })
     });
 
     if (!res.ok) throw new Error('Vale kasutajanimi või parool');
 
     const data = await res.json();
-    localStorage.setItem('token', data.token); // Salvesta token
-    router.push('/admin-dashboard'); // Suuna edasi admin lehele
+    localStorage.setItem('token', data.token);
+    router.push('/admin');
   } catch (err) {
     errorMessage.value = err.message;
   }
 };
+
 </script>
 
 <style scoped>
 .login-container {
   max-width: 400px;
   margin: 50px auto;
-  background: #222;
+  border: 2px solid #E6C36A;
   padding: 30px;
   border-radius: 8px;
-  color: white;
+  color: black;
 }
 label {
   display: block;
@@ -67,9 +71,9 @@ input {
 button {
   width: 100%;
   padding: 10px;
-  background: #3ecf8e;
+  background: #E6C36A;
   border: none;
-  color: black;
+  color: white;
   font-weight: bold;
   border-radius: 4px;
 }

@@ -21,7 +21,7 @@
         </label>
 
         <label>Email (soovituslik):
-        <input v-model="form.email" type="email" />
+          <input v-model="form.email" type="email" />
         </label>
 
         <label>Algusaeg:
@@ -33,8 +33,8 @@
         </label>
 
         <div class="modal-actions">
-          <button type="submit">Salvesta</button>
-          <button type="button" @click="$emit('close')">Tühista</button>
+          <button type="submit">💾 Salvesta</button>
+          <button type="button" class="cancel-button" @click="$emit('close')">Tühista</button>
         </div>
       </form>
     </div>
@@ -67,7 +67,6 @@ const submit = () => {
 };
 </script>
 
-
 <style scoped>
 .modal-backdrop {
   position: fixed;
@@ -75,11 +74,11 @@ const submit = () => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* tumedam taust */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* väga kõrge */
+  z-index: 9999;
 }
 
 .modal-content {
@@ -91,10 +90,25 @@ const submit = () => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.modal-content form {
+form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #333;
+}
+
+input,
+select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+  font-size: 1rem;
 }
 
 .modal-actions {
@@ -102,4 +116,29 @@ const submit = () => {
   justify-content: flex-end;
   gap: 1rem;
 }
+
+button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  background-color: #3ecf8e;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #33b67a;
+}
+
+.cancel-button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.cancel-button:hover {
+  background-color: #c7c7c7;
+}
 </style>
+

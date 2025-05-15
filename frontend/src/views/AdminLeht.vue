@@ -25,8 +25,18 @@ export default {
 </script>
 
 <template>
-  <h1>KalendriVaade</h1>
+  <h1>Kalender</h1>
     <KalendriVaade />
   <h1>Teenused</h1>
     <AdminTeenused />
 </template>
+
+<style scoped lang="scss">
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Tangerine', serif;
+    font-size: 6em;
+    color: #333;
+  }
+</style>

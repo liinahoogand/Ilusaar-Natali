@@ -73,10 +73,10 @@ const lisaUusTeenus = async () => {
     if (!res.ok) throw new Error('Lisamine ebaõnnestus');
 
     const uus = await res.json();
-    teenused.value.push(uus); // Lisa uute hulka
+    teenused.value.push(uus);
     alert('Teenuse lisamine õnnestus');
 
-    // Nulli vorm
+
     uusTeenus.value = {
       nimi: '',
       hind: '',
@@ -97,7 +97,6 @@ onMounted(fetchTeenused);
 
 <template>
   <div class="admin-teenused">
-    <h2>Admin – Teenuste haldus</h2>
 
     <div v-if="loading">Laen teenuseid...</div>
     <div v-else-if="error">{{ error }}</div>
@@ -116,7 +115,6 @@ onMounted(fetchTeenused);
         </thead>
         <tbody>
 
-          <!-- 🟢 Lisa uus teenus -->
           <tr>
             <td><input v-model="uusTeenus.nimi" placeholder="Teenuse nimi" /></td>
             <td><input v-model="uusTeenus.hind" placeholder="Hind" /></td>
@@ -137,7 +135,6 @@ onMounted(fetchTeenused);
             </td>
           </tr>
 
-          <!-- 🔁 Olemasolevad teenused -->
           <tr v-for="teenus in teenused" :key="teenus._id">
             <td><input v-model="teenus.nimi" /></td>
             <td><input v-model="teenus.hind" /></td>
