@@ -70,11 +70,11 @@ watch(() => props.booking, (b) => {
     form.teenus = b.teenus;
     form.teenusepakkuja = b.teenusepakkuja;
     form.nimi = b.nimi;
-    form.email = b.email || '';
+    form.email = b.email;
     form.kuupäev = b.kuupäev;
     form.kell = b.kell;
     form.lõpp = b.lõpp;
-    form.asukoht = b.asukoht || '';
+    form.asukoht = b.asukoht;
   }
 }, { immediate: true });
 
