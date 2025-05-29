@@ -16,7 +16,7 @@
       </label>
 
       <label>Email:
-        <input v-model="form.email" type="email" />
+        <input v-model="form.email" type="email" required/>
       </label>
 
       <label>Kuupäev:
