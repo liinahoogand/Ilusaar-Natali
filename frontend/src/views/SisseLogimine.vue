@@ -40,7 +40,7 @@ const login = async () => {
     if (!res.ok) throw new Error('Vale kasutajanimi või parool');
 
     const data = await res.json();
-    localStorage.setItem('token', data.token);
+    sessionStorage.setItem('token', data.token);
     router.push('/admin');
   } catch (err) {
     errorMessage.value = err.message;

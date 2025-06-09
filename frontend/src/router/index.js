@@ -56,7 +56,7 @@ router.beforeEach((to, from, next) => {
   document.title = to.meta.title || defaultTitle;
 
   // Kontrolli, kas sisselogimine on vajalik
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (to.meta.requiresAuth && !token) {
     next('/sisselogimine');
   } else {
