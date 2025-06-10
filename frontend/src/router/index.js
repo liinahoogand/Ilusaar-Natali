@@ -55,10 +55,11 @@ router.beforeEach((to, from, next) => {
   const defaultTitle = 'Ilusaar';
   document.title = to.meta.title || defaultTitle;
 
-  // Kontrolli, kas sisselogimine on vajalik
   const token = sessionStorage.getItem('token');
+
+  // Kui sihtleht vajab autentimist ja pole tokenit, suuna sisselogimisele
   if (to.meta.requiresAuth && !token) {
-    next('/sisselogimine');
+    next({ path: '/sisselogimine' });
   } else {
     next();
   }
