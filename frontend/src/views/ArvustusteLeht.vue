@@ -92,13 +92,6 @@
       async submitReview() {
         const today = new Date().toISOString().split("T")[0];
 
-        // Lisa kohe kohalikku loendisse
-        const uus = {
-          ...this.newReview,
-          date: today
-        };
-        this.reviews.unshift(uus);
-
         // Saada serverisse
         try {
           await fetch('https://ilusaar-backend.onrender.com/api/arvustused', {
@@ -107,7 +100,8 @@
             body: JSON.stringify({
               nimi: this.newReview.author,
               kommentaar: this.newReview.comment,
-              hinne: this.newReview.rating
+              hinne: this.newReview.rating,
+              kuupaev: today
             })
           });
         } catch (err) {

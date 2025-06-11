@@ -5,6 +5,8 @@ const router = express.Router();
 
 // POST – salvesta uus arvustus
 router.post('/', async (req, res) => {
+  console.log('POST body:', req.body);
+
   try {
     const review = new Review(req.body);
     await review.save();
