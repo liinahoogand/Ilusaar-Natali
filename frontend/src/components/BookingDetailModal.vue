@@ -19,6 +19,10 @@
         <input v-model="form.email" required/>
       </label>
 
+      <label>Telefon:
+        <input v-model="form.telefon" required/>
+      </label>
+
       <label>Kuupäev:
         <input v-model="form.kuupäev" type="date" required />
       </label>
@@ -60,6 +64,7 @@ const form = reactive({
   teenusepakkuja: '',
   nimi: '',
   email: '',
+  telefon: '',
   kuupäev: '',
   kell: '',
   lõpp: '',
@@ -73,6 +78,7 @@ watch(() => props.booking, (b) => {
     form.teenusepakkuja = b.teenusepakkuja;
     form.nimi = b.nimi;
     form.email = b.email;
+    form.telefon = b.telefon;
     form.kuupäev = b.kuupäev;
     form.kell = b.kell;
     form.lõpp = b.lõpp;
