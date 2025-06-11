@@ -295,6 +295,31 @@ body {
       color: white;
     }
   }
+  @media screen and (max-width: 768px) {
+
+    .teenuste-nimekiri-wrapper {
+      flex-direction: column;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .teenuste-nimekiri {
+      width: 100%;
+      max-width: 90%;
+    }
+
+    .divider2 {
+      display: none;
+    }
+
+    .teenused-pealkiri {
+      font-size: 40px;
+    }
+
+    .service {
+      font-size: 15px;
+    }
+  }
 }
 
 /* Tagasiside Section */
