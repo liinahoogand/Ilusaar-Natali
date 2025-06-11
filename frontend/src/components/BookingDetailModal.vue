@@ -16,7 +16,7 @@
       </label>
 
       <label>Email:
-        <input v-model="form.email" type="email" required/>
+        <input v-model="form.email" required/>
       </label>
 
       <label>Kuupäev:
@@ -66,6 +66,8 @@ const form = reactive({
   asukoht: ''
 });
 watch(() => props.booking, (b) => {
+  console.log('BRONEERING props:', b);
+
   if (b) {
     form.teenus = b.teenus;
     form.teenusepakkuja = b.teenusepakkuja;

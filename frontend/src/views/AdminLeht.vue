@@ -25,7 +25,6 @@ export default {
 </script>
 
 <template>
-  <button @click="logout">Logi välja</button>
   <h1>Kalender</h1>
     <KalendriVaade />
   <h1>Teenused</h1>

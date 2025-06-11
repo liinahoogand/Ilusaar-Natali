@@ -89,13 +89,32 @@
       };
     },
     methods: {
-      submitReview() {
+      async submitReview() {
         const today = new Date().toISOString().split("T")[0];
-        this.reviews.push({
+
+        // Lisa kohe kohalikku loendisse
+        const uus = {
           ...this.newReview,
-          date: today,
-        });
-  
+          date: today
+        };
+        this.reviews.unshift(uus);
+
+        // Saada serverisse
+        try {
+          await fetch('https://ilusaar-backend.onrender.com/api/arvustused', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              nimi: this.newReview.author,
+              kommentaar: this.newReview.comment,
+              hinne: this.newReview.rating
+            })
+          });
+        } catch (err) {
+          console.error("Viga arvustuse salvestamisel:", err);
+          alert("Viga: arvustust ei õnnestunud salvestada andmebaasi.");
+        }
+
         // Tühjenda vorm
         this.newReview = {
           author: "",
@@ -106,6 +125,7 @@
     },
   };
   </script>
+
   
   <style scoped>
   .arvustused-page {
