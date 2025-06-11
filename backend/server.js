@@ -9,6 +9,7 @@ import connectDB from './utils/db.js';
 import servicesRoute from './routes/services.js';
 import bookingRoutes from './routes/booking.js';
 import loginRoutes from './routes/login.js';
+import arvustusRoutes from './routes/arvustus.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -62,6 +63,7 @@ app.get('/image/:id', async (req, res) => {
 app.use('/api/teenused', servicesRoute);
 app.use('/api/broneeringud', bookingRoutes);
 app.use('/api/login', loginRoutes);
+app.use('/api/arvustused', arvustusRoutes);
 
 // Serve frontend
 const __filename = fileURLToPath(import.meta.url);
