@@ -1,5 +1,5 @@
 import express from 'express';
-import Review from '../models/Review.js';
+import Arvustus from '../models/Arvustus.js';
 
 const router = express.Router();
 
@@ -8,8 +8,8 @@ router.post('/', async (req, res) => {
   console.log('POST body:', req.body);
 
   try {
-    const review = new Review(req.body);
-    await review.save();
+    const arvustus = new Arvustus(req.body);
+    await arvustus.save();
     res.status(201).json({ message: 'Arvustus salvestatud' });
   } catch (err) {
     console.error('Viga salvestamisel:', err);
@@ -20,8 +20,8 @@ router.post('/', async (req, res) => {
 // GET – kõik arvustused
 router.get('/', async (req, res) => {
   try {
-    const reviews = await Review.find().sort({ createdAt: -1 });
-    res.json(reviews);
+    const arvustused = await Arvustus.find().sort({ createdAt: -1 });
+    res.json(arvustused);
   } catch (err) {
     res.status(500).json({ error: 'Laadimine ebaõnnestus' });
   }
