@@ -71,7 +71,8 @@ const calendarOptions = ref({
         _id: clicked.id,
         nimi: clicked.extendedProps.nimi,
         teenus: info.event.title,
-        email: '',
+        email: clicked.extendedProps.email || '',
+        telefon: clicked.extendedProps.telefon || '',
         kuupäev: clicked.start.split('T')[0],
         kell: clicked.start.split('T')[1],
         lõpp: clicked.end.split('T')[1],
@@ -115,7 +116,9 @@ const fetchBookings = async () => {
           _id: b._id, // ← siia lisa see!
           asukoht: b.asukoht,
           teenusepakkuja: b.teenusepakkuja,
-          nimi: b.nimi
+          nimi: b.nimi,
+          email: b.email || '',
+          telefon: b.telefon || ''
         }
       }));
 
